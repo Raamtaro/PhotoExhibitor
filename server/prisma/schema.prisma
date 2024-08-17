@@ -30,6 +30,9 @@ model Images {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   name String? @unique
+  url String //will store the Cloudinary URL
+  description String?
+
 
 
   owner Users @relation(fields: [ownerId], references: [id], onDelete: Cascade)

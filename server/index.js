@@ -12,6 +12,8 @@ import { jwtStrategy } from "./config/passportJwtStrategy.js";
 
 import cors from 'cors'
 
+configDotenv()
+
 
 const app = express()
 const port = 3000;
