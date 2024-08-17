@@ -14,7 +14,7 @@ const getAllCollections = asyncHandler( async (req, res) => {
         const allCollections = await prisma.collections.findMany(
             {
                 where: {
-                    id: client.id
+                    ownerId: client.id
                 }
             }
         )
@@ -116,7 +116,7 @@ const updateCollection = asyncHandler( async (req, res) => {
                 id: id
             },
             data: {
-                updateData
+                ...updateData
             }
         })
         res.status(200).json({updatedCollection})
