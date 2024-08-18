@@ -7,7 +7,26 @@ import { configDotenv } from 'dotenv'
 configDotenv()
 const prisma = new PrismaClient()
 
-const getAllCollections = asyncHandler( async (req, res) => {
+const getAllCollections = asyncHandler( async(req, res) => {
+    try {
+        const allCollections = await prisma.findMany({
+            select: {
+                id: true,
+                owner: {
+                    name: true
+                },
+                name: true
+            }
+        })
+        res.status(200).json({allCollections})
+
+    } catch(error) {
+        console.log(error)
+        res.status(500).json({error: "Couldn't retrieve Collections"})
+    }
+})
+
+const getMyCollections = asyncHandler( async (req, res) => {
     const client = req.user
     
     try {
@@ -167,6 +186,7 @@ const deleteCollection = asyncHandler( async (req, res) => {
 })
 export default {
     getAllCollections,
+    getMyCollections,
     getCollection,
     createCollection,
     updateCollection,
