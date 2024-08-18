@@ -68,6 +68,22 @@ const getCollection = asyncHandler( async (req, res) => {
 
 
 const createCollection = asyncHandler( async (req, res) => {
+
+    /**
+     * Validation First
+     */
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json( {
+            error: errors.array()
+        })
+    }
+
+    /**
+     * If Validated, then go on to the actual code
+     */
+
     const client = req.user
     const {name, description } = req.body
     const updateData = {}
@@ -84,7 +100,7 @@ const createCollection = asyncHandler( async (req, res) => {
             {
                 data: {
                     ...updateData,
-                    owner: {connect: client.id}
+                    owner: {connect: {id: client.id} }
                 },
                 
             }
@@ -100,10 +116,25 @@ const createCollection = asyncHandler( async (req, res) => {
 })
 
 const updateCollection = asyncHandler( async (req, res) => {
+
+    /**
+     * Validation First
+     */
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json( {
+            error: errors.array()
+        })
+    }
+
+    /**
+     * If Validated, then go on to the actual code
+     */
+
     const client = req.user
     const {name, description, id} = req.body
     const updateData = {}
-    
 
     if (!name && !description) {
         return res.status(400).json({error: "Please include either a name or a description in the body"})
