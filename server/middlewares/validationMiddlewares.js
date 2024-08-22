@@ -18,10 +18,22 @@ const validateUserUpdate = [
 
 ]
 
-const validateCollectionMod = [
+const validateCollectionCreate = [
     body("name").trim()
         .isString().withMessage("Must be a String!")
-        .isLength({min: 3}).withMessage("Must be at least 3 Characters long!")
+        .isLength({min: 3}).withMessage("Must be at least 3 Characters long!"),
+    body("description").trim()
+        .isString().withMessage("Must be a String!")
+        .isLength({min: 3, max: 5000}).withMessage("Must be between 3-5000 characters")
+]
+
+const validateCollectionMod = [
+    body("description").optional().trim()
+        .isString().withMessage("Must be a String!")
+        .isLength({min: 3}).withMessage("Must be at least 3 Characters long!"),
+    body("name").optional().trim()
+        .isString().withMessage("Must be a String!")
+        .isLength({min: 3}).withMessage("Must be at least 3 Characters")
 ]
 
 
@@ -30,6 +42,7 @@ const validateCollectionMod = [
 export default {
     validateUserCreation,
     validateUserUpdate,
+    validateCollectionCreate,
     validateCollectionMod
     // validatePostMod,
     // validateCommentMod

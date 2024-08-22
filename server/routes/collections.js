@@ -8,7 +8,7 @@ const router = Router()
 router.get('/', passport.authenticate('jwt', {session: false}), collectionsController.getAllCollections)
 router.get('/mycollections', passport.authenticate('jwt', {session: false}), collectionsController.getMyCollections) //Eventually protect w/ JWT, I want to be the only one able to see each collection
 router.get('/collection', passport.authenticate('jwt', {session: false}), collectionsController.getCollection) 
-router.post('/collection', passport.authenticate('jwt', {session: false}), validationMiddlewares.validateCollectionMod, collectionsController.createCollection)
+router.post('/collection', passport.authenticate('jwt', {session: false}), validationMiddlewares.validateCollectionCreate, collectionsController.createCollection)
 router.put('/collection', passport.authenticate('jwt', {session: false}), validationMiddlewares.validateCollectionMod, collectionsController.updateCollection)
 
 

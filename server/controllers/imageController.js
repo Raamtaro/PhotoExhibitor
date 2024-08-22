@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import cloudinary from '../config/cloudinary.js'
 import { configDotenv } from 'dotenv'
 import { PrismaClient } from '@prisma/client'
+import fs from 'fs'
 
 const prisma = new PrismaClient();
 configDotenv()
@@ -54,17 +55,26 @@ const uploadImage = asyncHandler( async (req, res) => {
         return res.status(400).json({error: "Please include file path in the request"})
     }
 
+    if (!collectionId) {
+        return res.status(400).json({error: "Please include a collection in the request"})
+    }
+
     try {
         const result = await cloudinary.uploader.upload(req.file.path)
 
         const newImage = await prisma.images.create(
             {
-                name: req.file.originalname,
-                url: result.secure_url,
-                owner: {connect: {id: client.id}},
-                collection: {connect: {id: collectionId}}
+                data: {
+                    name: req.file.originalname,
+                    url: result.secure_url,
+                    owner: {connect: {id: client.id}},
+                    collection: {connect: {id: parseInt(collectionId)}}
+                }
+
             }
         )
+
+        fs.unlinkSync(req.file.path)
 
         res.status(201).json({message: "Upload Successful.", image: newImage})
 
