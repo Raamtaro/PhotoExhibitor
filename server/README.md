@@ -1,0 +1,1 @@
+- Need to revisit the check in the authController.js under registerUser to make sure that the existing email check is working properly. Right now, if I try to sign up with an existing email from the front end, all I see in the console is a 400: Bad Request message rather than what I've set up.
