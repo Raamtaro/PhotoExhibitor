@@ -1,4 +1,4 @@
-.register-main {
+.login-main {
     max-width: 25rem;
     width: 100%;
     display: flex;
@@ -8,23 +8,23 @@
     justify-content: center;
 }
 
-.register-main a {
+.login-main a {
     cursor: pointer;
 
 }
 
-.register-main .form {
+.login-main .form {
     box-shadow: 0 0 250px #000;
     text-align: center;
     padding: 4rem 2rem;
 }
 
 
-.register-main .form__field {
+.login-main .form__field {
     margin-bottom: 1rem;
 }
 
-.register-main input {
+.login-main input {
     border: 0;
     background-color: transparent;
     outline: 0;
@@ -33,7 +33,7 @@
     font-size: 1.5rem;
 }
 
-.register-main h2 {
+.login-main h2 {
     font-size: 2.75rem;
     font-weight: 100;
     margin: 0 0 1rem;
@@ -41,7 +41,7 @@
     align-self: center;
 }
 
-.register-main .form button {
+.login-main .form button {
     background-color: transparent;
     border: 0;
     cursor: pointer;
@@ -49,11 +49,11 @@
     
 }
 
-.register-main p {
+.login-main p {
     font-weight: 100;
 }
 
-.register-main .success-message {
+.login-main .success-message {
     background-color: #d4edda;
     color: #155724;
     padding: 1rem;
@@ -63,7 +63,7 @@
     font-size: 1.2rem;
   }
   
-.register-main .success-message a {
+.login-main .success-message a {
     color: #155724;
     font-weight: bold;
     text-decoration: underline;

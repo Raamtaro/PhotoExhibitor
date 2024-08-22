@@ -8,7 +8,7 @@ function Home() {
 
   return (
     <div className="home-main">
-      
+      Hello
     </div>
   )
 }
