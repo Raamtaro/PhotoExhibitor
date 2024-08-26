@@ -9,13 +9,21 @@ const prisma = new PrismaClient()
 
 const getAllCollections = asyncHandler( async(req, res) => {
     try {
-        const allCollections = await prisma.findMany({
+        const allCollections = await prisma.collections.findMany({
             select: {
                 id: true,
                 owner: {
-                    name: true
+                    select: {
+                        name: true
+                    }
                 },
-                name: true
+                name: true, 
+                images: {
+                    select: {
+                        name: true
+                    }
+                },
+
             }
         })
         res.status(200).json({allCollections})
@@ -26,7 +34,7 @@ const getAllCollections = asyncHandler( async(req, res) => {
     }
 })
 
-const getMyCollections = asyncHandler( async (req, res) => {
+const getMyCollections = asyncHandler( async (req, res) => { //Route mainly used for display
     const client = req.user
     
     try {
@@ -34,6 +42,28 @@ const getMyCollections = asyncHandler( async (req, res) => {
             {
                 where: {
                     ownerId: client.id
+                },
+                
+                select: {
+                    id: true,
+                    name: true,
+                    description: true,
+
+
+                    owner: {
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    },
+                    
+                    images: {
+                        select: {
+                            name: true,
+                            url: true,
+                        }
+                    },
+                    
                 }
             }
         )
