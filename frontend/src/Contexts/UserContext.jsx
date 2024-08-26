@@ -8,12 +8,14 @@ export const useUser = () => useContext(UserContext);
 //Provider Component
 export const UserProvider = ({children}) => {
     const [user, setUser] = useState(null);
+    const [userLoading, setUserLoading] = useState(true);
 
     useEffect(() => {
         const savedUser = JSON.parse(localStorage.getItem('user'));
         if (savedUser) {
           setUser(savedUser);
         }
+        setUserLoading(false)
       }, []);
 
     const login = (userData, token) => {
@@ -29,7 +31,7 @@ export const UserProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value = {{user, login, logout}}>
+        <UserContext.Provider value = {{user, login, logout, userLoading}}>
             {children}
         </UserContext.Provider>
     )

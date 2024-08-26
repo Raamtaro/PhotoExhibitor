@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import NavBar from '../NavBar/NavBar'
 
 
 
@@ -7,9 +8,13 @@ function Home() {
 
 
   return (
-    <div className="home-main">
-      Hello
-    </div>
+    <>
+      <NavBar />
+      <div className="home-main">
+        Hey there.
+      </div>
+    </>
+
   )
 }
 

@@ -8,9 +8,10 @@ import Register from "../Components/Register/Register";
 
 //User Routes
 import UserOutlet from "../Components/User/UserOutlet";
-import UserDashboard from "../Components/User/UserDashboard"
-import UserCollectionsViewer from "../Components/User/Collections/UserCollectionsViewer";
-import CollectionsEditor from "../Components/User/Collections/CollectionsEditor";
+import UserDashboard from "../Components/User/UserDashboard/UserDashboard"
+import CollectionsOutlet from "../Components/User/Collections/CollectionsOutlet";
+import CollectionsEditor from "../Components/User/Collections/CollectionsEditor/CollectionsEditor";
+import CollectionsCreator from "../Components/User/Collections/CollectionsCreator/CollectionsCreator";
 
 
 
@@ -21,19 +22,19 @@ const router = createBrowserRouter([
         path: "/",
         element: <App />,
         children: [
-            {
+            {   //Home
                 path: "/",
                 element: <Home />
             },
-            {
+            {   //Sign-up
                 path: "register",
                 element: <Register />
             },
-            {
+            {   //Login
                 path: "login",
                 element: <Login />
             },
-            {
+            {   //UserPath
                 path: "user",
                 element: 
                     <ProtectedRoute>
@@ -46,7 +47,17 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "collections",
-                        element: <UserCollectionsViewer />
+                        element: <CollectionsOutlet />,
+                        children: [
+                            {
+                                path: "edit",
+                                element: <CollectionsEditor />
+                            },
+                            {
+                                path: "create",
+                                element: <CollectionsCreator />
+                            }   
+                        ]
                     }
                 ]
             }

@@ -1,6 +1,7 @@
 import React from 'react'
 
-function CollectionsEditor() {
+const  CollectionsEditor = () => {
+  
   return (
     <div>CollectionsEditor</div>
   )
