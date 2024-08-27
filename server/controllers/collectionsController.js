@@ -84,6 +84,20 @@ const getCollection = asyncHandler( async (req, res) => {
             {
                 where: { 
                     id: id
+                },
+                select: {
+                    id: true,
+                    name: true,
+                    ownerId: true,
+                    images: {
+                        select: {
+                            id: true,
+                            name: true,
+                            url: true,
+                            
+                        }
+                    },
+                    
                 }
             }
         )
