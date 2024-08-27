@@ -73,7 +73,7 @@ const CollectionsViewer = () => {
   return (
     <>
       <div className="collections-viewer-main">
-        <div className="collections-header">This is {currentCollection?.name}.</div>
+        <header className="viewer-header">This is {currentCollection?.name}</header>
       </div>
     </>
   )
