@@ -1,8 +1,15 @@
-# React + Vite
+# Photo Exhibitor React<>Vite FrontEnd
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a play off of this demo from codrops: https://tympanus.net/Tutorials/ShaderOnScroll/
 
-Currently, two official plugins are available:
+The end user will be able to sign-in to the frontend and then create collections which contain images. Their images will then be rendered into its own page, laid out in a similar fashion to the codrops tutorial with the same shader effect applied.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+After this core functionality is created, the features will be extended to include:
+
+- At least two more shader effects - including an RGB Offset/shift effect
+- Customizable background colouring
+- Maybe an entirely different scene and some postprocessing effects
+
+
+I've been learning a lot of server-side programming lately, and wanted to tie that together with the Three JS tinkering I've also been doing for fun. Making a fullstack project to add to my portfolio is the convenient cherry on top.
+

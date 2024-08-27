@@ -1,7 +1,18 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
+import { useFrame } from '@react-three/fiber'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
 import './styles/CollectionsViewer.css'
+
+import Lenis from 'lenis'
+import {ReactLenis, useLenis} from 'lenis/react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { CustomEase } from 'gsap/all'
+
+import { calcFov, debounce, lerp } from '../../../../utils/utils'
+
+gsap.registerPlugin(useGSAP)
 
 const CollectionsViewer = () => {
   const navigate = useNavigate()
@@ -12,9 +23,22 @@ const CollectionsViewer = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  //Objective of this is to:
-  //1. Initially set the images in certain positions on the screen based on styling rules
-  //2. Secondarily set up the Three js scene to map the meshes to the correct position canvas <> viewport
+  const scroll = useRef({
+    scrollY: 0,
+    scrollVelocity: 0
+  })
+  const lenis = useLenis()
+
+  useEffect(() => {
+    // Listen to Lenis scroll events
+    if (lenis) {
+      lenis.on('scroll', ({ scrollY, velocity }) => {
+        scroll.current.scrollY = scrollY;
+        scroll.current.scrollVelocity = velocity;
+      });
+    }
+
+  }, [lenis]);
 
   useEffect(()=>{
     const token = localStorage.getItem('token')
@@ -72,9 +96,23 @@ const CollectionsViewer = () => {
 
   return (
     <>
-      <div className="collections-viewer-main">
-        <header className="viewer-header">This is {currentCollection?.name}</header>
-      </div>
+      
+        <header className="viewer-header">This is the {currentCollection?.name} collection.</header>
+      <ReactLenis root>
+        <div className="collections-viewer-main">
+          <div className="collections-grid">
+            {
+              images.map((image, index) => (
+                //Gonna need to make a ThreeImage.jsx component using the View tool
+                <figure className={`img-wrap img-wrap-${index + 1}`} key={index}>
+                  <img className="img" src={image.url} alt={`Blur Exhibit ${index + 1}`} />
+                  <figcaption><strong>BE{`${image.id < 10 ? '0' : ''}${image.id}`}</strong></figcaption>
+                </figure>
+              ))
+            }
+          </div>
+        </div>
+      </ReactLenis>
     </>
   )
 }

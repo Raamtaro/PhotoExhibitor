@@ -11,3 +11,70 @@
     font-weight: 100;
     margin: 20px;
 }
+
+.collections-viewer-main {
+    max-width: 120rem;
+    margin-inline: auto;
+}
+
+.collections-grid {
+    display: grid;
+    min-height: 100vh;
+    width: 100%;
+    gap: calc(clamp(0.625rem, -0.2463rem + 3.7175vw, 3.75rem)*5) clamp(0.625rem, -0.2463rem + 3.7175vw, 3.75rem);
+    grid-template-columns: repeat(6, 1fr);
+    padding-block: 6rem;
+}
+
+.img-wrap {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+    margin: 0;
+}
+
+.img {
+    display: block;
+    grid-column: 1 / span 2;
+    max-width: 100%;
+}
+
+.img-wrap figcaption {
+    max-width: 200px;
+    align-self: end;
+  }
+
+.img-wrap-1 {
+    grid-column: 2 / span 3;
+    grid-row: 1;
+}
+
+.img-wrap-2 {
+    grid-column: 4 / span 3;
+    grid-row: 2;
+  }
+  
+.img-wrap-3 {
+    grid-column: 3 / span 3;
+    grid-row: 3;
+}
+
+.img-wrap-4 {
+    grid-column: 1 / span 3;
+    grid-row: 4;
+}
+
+.img-wrap-5 {
+    grid-column: 4 / span 3;
+    grid-row: 5;
+}
+
+.img-wrap-6 {
+    grid-column: 3 / span 3;
+    grid-row: 6;
+}
+
+.img-wrap-7 {
+    grid-column: 2 / span 3;
+}
