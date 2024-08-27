@@ -23,6 +23,11 @@ const UserNavBar = () => {
     }
     return (
         <nav className="user-nav-bar"> {/**This might eventually be merged with the overarching nav bar */}
+            <h2 className="nav-item nav-header">
+                <div className="nav-header-text">N</div>
+                <div className="nav-header-text">A</div>
+                <div className="nav-header-text">V</div>
+            </h2>
             <div className="nav-item dashboard" onClick={handleDashboard}>
                 <span> <CiHome /> </span>
                 <div className="nav-item-text">My Dashboard</div>

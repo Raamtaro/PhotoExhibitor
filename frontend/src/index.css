@@ -22,19 +22,18 @@
 
 footer {
   position: fixed;
-  bottom: 0;
+  top: 0;
   right: 0;
   height: auto;
   padding: 10px;
-  /* transform: rotate(90deg); Rotates the text vertically */
-  /* transform-origin: bottom right; */
-  text-align: right;
+  font-weight: 100;
+
 }
 
 footer p {
   writing-mode: vertical-rl; /* Makes text vertical, from bottom to top */
-  text-orientation: mixed; /* Ensures the text is readable */
-  transform: rotate(180deg); /* Rotates the text for the correct reading orientation */
+  /* text-orientation: mixed; Ensures the text is readable */
+  /* transform: rotate(180deg);  */
   margin: 0;
 }
 
