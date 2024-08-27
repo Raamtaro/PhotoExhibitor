@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
+import './styles/CollectionsViewer.css'
 
 const CollectionsViewer = () => {
   const navigate = useNavigate()
@@ -48,6 +49,9 @@ const CollectionsViewer = () => {
     getCollectionInfo()
   }, [id])
 
+
+
+  //debug statements
   useEffect(
     ()=> 
       {
@@ -59,6 +63,12 @@ const CollectionsViewer = () => {
       images
     ]
   )
+
+  if (loading) {
+    return (
+      <div>Loading...</div>
+    )
+  }
 
   return (
     <>
