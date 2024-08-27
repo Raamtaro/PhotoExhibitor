@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
+import './styles/CollectionsEditor.css'
 
 
 const  CollectionsEditor = () => {
@@ -43,6 +44,7 @@ const  CollectionsEditor = () => {
       if (response.ok) {
         const result = await response.json()
         console.log(result)
+        setImages([...images, result.image])
         
       }
 
@@ -114,7 +116,16 @@ const  CollectionsEditor = () => {
             Upload Selected File
           </button>
         </div>
-
+        <div className="image-preview-grid">
+          {images.map((image, index) => (
+            <div className="image-preview" key={index}>
+              <img src={image.url} alt={`Image ${index + 1}`} />
+            </div>
+          ))}
+        </div>
+        <button className="navigate-button" onClick={handleNavigateToViewer}>
+          View Collection
+        </button>
 
       </div>
     </>

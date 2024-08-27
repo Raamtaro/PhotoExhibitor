@@ -21,14 +21,21 @@
 }
 
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  left: 0;
   right: 0;
-  height: 50px; /* Set the footer height */
- 
-  text-align: center;
+  height: auto;
   padding: 10px;
+  /* transform: rotate(90deg); Rotates the text vertically */
+  /* transform-origin: bottom right; */
+  text-align: right;
+}
+
+footer p {
+  writing-mode: vertical-rl; /* Makes text vertical, from bottom to top */
+  text-orientation: mixed; /* Ensures the text is readable */
+  transform: rotate(180deg); /* Rotates the text for the correct reading orientation */
+  margin: 0;
 }
 
 main {
