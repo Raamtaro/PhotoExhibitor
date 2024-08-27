@@ -77,13 +77,13 @@ const getMyCollections = asyncHandler( async (req, res) => { //Route mainly used
 const getCollection = asyncHandler( async (req, res) => {
     //get the client
     const client = req.user
-    const collectionId = req.body.id
+    const id = parseInt(req.params.id)
 
     try {
         const collection = await prisma.collections.findUnique( 
             {
                 where: { 
-                    id: collectionId
+                    id: id
                 }
             }
         )
