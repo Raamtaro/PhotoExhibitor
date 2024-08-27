@@ -6,6 +6,10 @@ nav {
     z-index: 10;
 }
 
+h2 {
+    cursor: pointer;
+}
+
 .user-nav-bar {
     right: 0;
     bottom: 0;
