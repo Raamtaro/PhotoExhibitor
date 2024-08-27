@@ -12,6 +12,8 @@ import UserDashboard from "../Components/User/UserDashboard/UserDashboard"
 import CollectionsOutlet from "../Components/User/Collections/CollectionsOutlet";
 import CollectionsEditor from "../Components/User/Collections/CollectionsEditor/CollectionsEditor";
 import CollectionsCreator from "../Components/User/Collections/CollectionsCreator/CollectionsCreator";
+import CollectionsViewer from "../Components/User/Collections/CollectionsViewer/CollectionsViewer";
+import AllCollections from "../Components/User/Collections/AllCollections/AllCollections";
 
 
 
@@ -50,13 +52,22 @@ const router = createBrowserRouter([
                         element: <CollectionsOutlet />,
                         children: [
                             {
-                                path: "edit",
+                                path: ":id/edit",
                                 element: <CollectionsEditor />
+                            },
+                            {
+                                path: ":id/view",
+                                element: <CollectionsViewer />
                             },
                             {
                                 path: "create",
                                 element: <CollectionsCreator />
-                            }   
+                            }, 
+                            {
+                                path: "all",
+                                element: <AllCollections />
+
+                            }
                         ]
                     }
                 ]

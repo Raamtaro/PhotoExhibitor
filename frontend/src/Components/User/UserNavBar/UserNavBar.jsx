@@ -16,7 +16,7 @@ const UserNavBar = () => {
         navigate('/user/collections/create')
     }
     const handleEdit = () => {
-        navigate('/user/collections/edit')
+        navigate('/user/collections/all')
     }
     const handleDashboard = () => {
         navigate('/user/dashboard')
