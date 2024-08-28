@@ -21,7 +21,7 @@ const prisma = new PrismaClient()
 
 app.use(cors(
     {
-        origin: 'http://localhost:5173',
+        origin: ['http://localhost:5173', 'https://3qlv9p-5173.csb.app/'],
         credentials: true,
     }
 ))
