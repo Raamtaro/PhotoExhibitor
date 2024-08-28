@@ -23,7 +23,7 @@ const Scene = () => {
       >
         <View.Port />
         <OrthographicCamera makeDefault position={[0, 0, 300]} zoom={1}/>
-
+        <Preload all />
       </Canvas>
     </>
 

@@ -80,17 +80,17 @@ const CollectionsViewer = () => {
 
 
   //debug statements
-  useEffect(
-    ()=> 
-      {
-        console.log(currentCollection)
-        console.log(images)
-      }, 
-    [
-      currentCollection,
-      images
-    ]
-  )
+  // useEffect(
+  //   ()=> 
+  //     {
+  //       console.log(currentCollection)
+  //       console.log(images)
+  //     }, 
+  //   [
+  //     currentCollection,
+  //     images
+  //   ]
+  // )
 
   if (loading) {
     return (
