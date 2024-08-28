@@ -12,6 +12,10 @@
     margin: 20px;
 }
 
+.line-author {
+    font-size: .75rem;
+}
+
 .collections-viewer-main {
     max-width: 120rem;
     margin-inline: auto;
@@ -24,6 +28,8 @@
     gap: calc(clamp(0.625rem, -0.2463rem + 3.7175vw, 3.75rem)*5) clamp(0.625rem, -0.2463rem + 3.7175vw, 3.75rem);
     grid-template-columns: repeat(6, 1fr);
     padding-block: 6rem;
+    margin: 1rem;
+    padding: 1rem;
 }
 
 .img-wrap {
@@ -31,6 +37,7 @@
     gap: 1rem;
     grid-template-columns: repeat(3, 1fr);
     max-width: 100%;
+    /* height: 70rem; */
     margin: 0;
 }
 
@@ -38,6 +45,8 @@
     display: block;
     grid-column: 1 / span 2;
     max-width: 100%;
+    height: 100%;
+    /* opacity: 0; */
 }
 
 .img-wrap figcaption {

@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
 import './styles/CollectionsViewer.css'
+import MeshImageWrapper from './MeshImageWrapper/MeshImageWrapper'
 
 import Lenis from 'lenis'
 import {ReactLenis, useLenis} from 'lenis/react'
@@ -11,6 +12,9 @@ import { useGSAP } from '@gsap/react'
 import { CustomEase } from 'gsap/all'
 
 import { calcFov, debounce, lerp } from '../../../../utils/utils'
+
+import Scene from '../../../Three/Scene'
+import MeshComponent from '../../../Three/MeshComponent/MeshComponent'
 
 gsap.registerPlugin(useGSAP)
 
@@ -76,17 +80,17 @@ const CollectionsViewer = () => {
 
 
   //debug statements
-  useEffect(
-    ()=> 
-      {
-        console.log(currentCollection)
-        console.log(images)
-      }, 
-    [
-      currentCollection,
-      images
-    ]
-  )
+  // useEffect(
+  //   ()=> 
+  //     {
+  //       console.log(currentCollection)
+  //       console.log(images)
+  //     }, 
+  //   [
+  //     currentCollection,
+  //     images
+  //   ]
+  // )
 
   if (loading) {
     return (
@@ -97,17 +101,22 @@ const CollectionsViewer = () => {
   return (
     <>
       
-        <header className="viewer-header">This is the {currentCollection?.name} collection.</header>
+      <header className="viewer-header">
+        <div className="viewer-header-line">This is the {currentCollection?.name} collection.</div>
+        <div className="viewer-header-line line-author">{user?.name}</div>
+      </header>
+      <Scene />
       <ReactLenis root>
         <div className="collections-viewer-main">
           <div className="collections-grid">
             {
               images.map((image, index) => (
                 //Gonna need to make a ThreeImage.jsx component using the View tool
-                <figure className={`img-wrap img-wrap-${index + 1}`} key={index}>
-                  <img className="img" src={image.url} alt={`Blur Exhibit ${index + 1}`} />
-                  <figcaption><strong>BE{`${image.id < 10 ? '0' : ''}${image.id}`}</strong></figcaption>
-                </figure>
+                // <figure className={`img-wrap img-wrap-${index + 1}`} key={index} >
+                //   <img className="img" src={image.url} alt={`Blur Exhibit ${index + 1}`} />
+                //   <figcaption><strong>BE{`${image.id < 10 ? '0' : ''}${image.id}`}</strong></figcaption>
+                // </figure>
+                <MeshImageWrapper key={index} image={image} index={index}/>
               ))
             }
           </div>
