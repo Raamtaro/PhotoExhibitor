@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
 import './styles/CollectionsViewer.css'
+import MeshImageWrapper from './MeshImageWrapper/MeshImageWrapper'
 
 import Lenis from 'lenis'
 import {ReactLenis, useLenis} from 'lenis/react'
@@ -111,11 +112,11 @@ const CollectionsViewer = () => {
             {
               images.map((image, index) => (
                 //Gonna need to make a ThreeImage.jsx component using the View tool
-                <figure className={`img-wrap img-wrap-${index + 1}`} key={index} >
-                  <img className="img" src={image.url} alt={`Blur Exhibit ${index + 1}`} />
-                  {/* <MeshComponent className="img" url={image.url}/> */}
-                  <figcaption><strong>BE{`${image.id < 10 ? '0' : ''}${image.id}`}</strong></figcaption>
-                </figure>
+                // <figure className={`img-wrap img-wrap-${index + 1}`} key={index} >
+                //   <img className="img" src={image.url} alt={`Blur Exhibit ${index + 1}`} />
+                //   <figcaption><strong>BE{`${image.id < 10 ? '0' : ''}${image.id}`}</strong></figcaption>
+                // </figure>
+                <MeshImageWrapper key={index} image={image} index={index}/>
               ))
             }
           </div>

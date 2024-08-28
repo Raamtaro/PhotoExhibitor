@@ -28,6 +28,8 @@
     gap: calc(clamp(0.625rem, -0.2463rem + 3.7175vw, 3.75rem)*5) clamp(0.625rem, -0.2463rem + 3.7175vw, 3.75rem);
     grid-template-columns: repeat(6, 1fr);
     padding-block: 6rem;
+    margin: 1rem;
+    padding: 1rem;
 }
 
 .img-wrap {
