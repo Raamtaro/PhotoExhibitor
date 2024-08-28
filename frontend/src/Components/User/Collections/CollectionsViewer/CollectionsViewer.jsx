@@ -12,6 +12,9 @@ import { CustomEase } from 'gsap/all'
 
 import { calcFov, debounce, lerp } from '../../../../utils/utils'
 
+import Scene from '../../../Three/Scene'
+import MeshComponent from '../../../Three/MeshComponent/MeshComponent'
+
 gsap.registerPlugin(useGSAP)
 
 const CollectionsViewer = () => {
@@ -97,15 +100,20 @@ const CollectionsViewer = () => {
   return (
     <>
       
-        <header className="viewer-header">This is the {currentCollection?.name} collection.</header>
+      <header className="viewer-header">
+        <div className="viewer-header-line">This is the {currentCollection?.name} collection.</div>
+        <div className="viewer-header-line line-author">{user?.name}</div>
+      </header>
+      <Scene />
       <ReactLenis root>
         <div className="collections-viewer-main">
           <div className="collections-grid">
             {
               images.map((image, index) => (
                 //Gonna need to make a ThreeImage.jsx component using the View tool
-                <figure className={`img-wrap img-wrap-${index + 1}`} key={index}>
+                <figure className={`img-wrap img-wrap-${index + 1}`} key={index} >
                   <img className="img" src={image.url} alt={`Blur Exhibit ${index + 1}`} />
+                  {/* <MeshComponent className="img" url={image.url}/> */}
                   <figcaption><strong>BE{`${image.id < 10 ? '0' : ''}${image.id}`}</strong></figcaption>
                 </figure>
               ))
