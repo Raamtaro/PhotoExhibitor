@@ -19,13 +19,36 @@ import MeshComponent from "../../../Three/MeshComponent/MeshComponent";
 gsap.registerPlugin(useGSAP);
 
 const CollectionsViewer = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user } = useUser();
   const { id } = useParams();
   const [currentCollection, setCurrentCollection] = useState({});
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [images, setImages] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const images = [
+    {
+      url: "https://res.cloudinary.com/dcar5qxqh/image/upload/v1724263862/glyxlu2norxrwtccqtsv.jpg",
+      id: 11,
+    },
+    {
+      url: "https://res.cloudinary.com/dcar5qxqh/image/upload/v1724264067/jkaqo03zwmmfkbuyxwqx.jpg",
+      id: 9,
+    },
+    {
+      url: "https://res.cloudinary.com/dcar5qxqh/image/upload/v1724264088/xc1m6nrhniyagbgeto5m.jpg",
+      id: 13,
+    },
+    {
+      url: "https://res.cloudinary.com/dcar5qxqh/image/upload/v1724727997/uete1ienb675lv5oqfwi.jpg",
+      id: 7,
+    },
+    {
+      url: "https://res.cloudinary.com/dcar5qxqh/image/upload/v1724728409/fdzv0l7ok6cqo2hug9q9.jpg",
+      id: 22,
+    },
+  ];
 
   const scroll = useRef({
     scrollY: 0,
@@ -43,35 +66,35 @@ const CollectionsViewer = () => {
     }
   }, [lenis]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-    const getCollectionInfo = async () => {
-      try {
-        const response = await fetch(
-          `https://photoexhibitor-dev.up.railway.app/collections/${id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (response.ok) {
-          const result = await response.json();
-          setCurrentCollection(result.collection);
-          setImages(result.collection.images);
-        }
-      } catch (error) {
-        console.error(error);
-        setError("Couldn't retrieve the collection");
-      } finally {
-        setLoading(false);
-      }
-    };
-    getCollectionInfo();
-  }, [id]);
+  //   const getCollectionInfo = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `https://photoexhibitor-dev.up.railway.app/collections/${id}`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       if (response.ok) {
+  //         const result = await response.json();
+  //         setCurrentCollection(result.collection);
+  //         setImages(result.collection.images);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //       setError("Couldn't retrieve the collection");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   getCollectionInfo();
+  // }, [id]);
 
   //debug statements
   // useEffect(
@@ -86,9 +109,9 @@ const CollectionsViewer = () => {
   //   ]
   // )
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <>
