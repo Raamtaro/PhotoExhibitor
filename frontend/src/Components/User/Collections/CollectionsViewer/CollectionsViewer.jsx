@@ -28,7 +28,7 @@ const CollectionsViewer = () => {
   const [scrollData, setScrollData] = useState({ scrollY: 0, scrollVelocity: 0 });
   const [error, setError] = useState('')
 
-  const scrollPos = useRef({
+  const scroll = useRef({
     scrollY: 0,
     scrollVelocity: 0
   })
@@ -46,8 +46,8 @@ const CollectionsViewer = () => {
   //   // Listen to Lenis scroll events
   //   if (lenis) {
   //     lenis.on('scroll', (e) => {
-  //       scrollPos.current.scrollY = window.scrollY;
-  //       scrollPos.current.scrollVelocity = e.velocity;
+  //       scroll.current.scrollY = window.scrollY;
+  //       scroll.current.scrollVelocity = e.velocity;
   //     });
   //   }
 
@@ -55,9 +55,9 @@ const CollectionsViewer = () => {
   useEffect(() => {
     if (lenis) {
       const updateScrollData = (e) => {
-        scrollPos.current.scrollY = window.scrollY;
-        scrollPos.current.scrollVelocity = e.velocity;
-        setScrollData({ scrollY: scrollPos.current.scrollY, scrollVelocity: scrollPos.current.scrollVelocity });
+        scroll.current.scrollY = window.scrollY;
+        scroll.current.scrollVelocity = e.velocity;
+        setScrollData({ scrollY: scroll.current.scrollY, scrollVelocity: scroll.current.scrollVelocity });
       };
 
       lenis.on('scroll', updateScrollData);
