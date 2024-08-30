@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, addEffect } from '@react-three/fiber'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
 import './styles/CollectionsViewer.css'
@@ -25,12 +25,14 @@ const CollectionsViewer = () => {
   const [currentCollection, setCurrentCollection] = useState({})
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(true)
+  const [scrollData, setScrollData] = useState({ scrollY: 0, scrollVelocity: 0 });
   const [error, setError] = useState('')
 
-  const scroll = useRef({
+  const scrollPos = useRef({
     scrollY: 0,
     scrollVelocity: 0
   })
+  // const lenis = useLenis()
   const lenis = useLenis()
 
   const cursorPos = useRef(
@@ -40,16 +42,38 @@ const CollectionsViewer = () => {
     }
   ) //Need to handle window cursorPositioning in this component, send to => MeshComponent
 
-  useEffect(() => {
-    // Listen to Lenis scroll events
-    if (lenis) {
-      lenis.on('scroll', ({ scrollY, velocity }) => {
-        scroll.current.scrollY = scrollY;
-        scroll.current.scrollVelocity = velocity;
-      });
-    }
+  // useEffect(() => {
+  //   // Listen to Lenis scroll events
+  //   if (lenis) {
+  //     lenis.on('scroll', (e) => {
+  //       scrollPos.current.scrollY = window.scrollY;
+  //       scrollPos.current.scrollVelocity = e.velocity;
+  //     });
+  //   }
 
+  // }, [lenis]);
+  useEffect(() => {
+    if (lenis) {
+      const updateScrollData = (e) => {
+        scrollPos.current.scrollY = window.scrollY;
+        scrollPos.current.scrollVelocity = e.velocity;
+        setScrollData({ scrollY: scrollPos.current.scrollY, scrollVelocity: scrollPos.current.scrollVelocity });
+      };
+
+      lenis.on('scroll', updateScrollData);
+
+      // Cleanup listener on unmount
+      return () => {
+        lenis.off('scroll', updateScrollData);
+      };
+    }
   }, [lenis]);
+
+  // addEffect((t)=> lenis.raf(t))
+
+  useEffect(() => {
+    console.log(scrollData.scrollY, scrollData.scrollVelocity);
+  }, [scrollData]);
 
   useEffect(()=>{
     const token = localStorage.getItem('token')
@@ -132,7 +156,7 @@ const CollectionsViewer = () => {
         <div className="viewer-header-line line-author">{user?.name}</div>
       </header>
       <Scene />
-      <ReactLenis root>
+      <ReactLenis root autoRaf>
         <div className="collections-viewer-main">
           <div className="collections-grid">
             {
