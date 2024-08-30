@@ -77,6 +77,20 @@ const CollectionsViewer = () => {
     getCollectionInfo()
   }, [id])
 
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      console.log(event.clientX / window.innerWidth, 1.0 - (event.clientY / window.innerHeight))
+      return
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [
+
+  ])
+
 
 
   //debug statements

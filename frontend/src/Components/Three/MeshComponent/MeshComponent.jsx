@@ -100,6 +100,8 @@ const MeshComponent = ({...props}) => {
 
 
 
+
+
   // useEffect(()=> {
   //   console.log(materialRef.current)
   //   console.log(meshRef.current)
