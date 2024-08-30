@@ -33,6 +33,13 @@ const CollectionsViewer = () => {
   })
   const lenis = useLenis()
 
+  const cursorPos = useRef(
+    {
+      current: {x: 0, y: 0},
+      target: {x: 0, y: 0},
+    }
+  ) //Need to handle window cursorPositioning in this component, send to => MeshComponent
+
   useEffect(() => {
     // Listen to Lenis scroll events
     if (lenis) {
@@ -79,8 +86,13 @@ const CollectionsViewer = () => {
 
   useEffect(() => {
     const handleMouseMove = (event) => {
-      console.log(event.clientX / window.innerWidth, 1.0 - (event.clientY / window.innerHeight))
-      return
+      // /**
+      //  * Test
+      //  */
+      // console.log(event.clientX / window.innerWidth, 1.0 - (event.clientY / window.innerHeight))
+      // return
+
+      
     }
     window.addEventListener('mousemove', handleMouseMove)
 

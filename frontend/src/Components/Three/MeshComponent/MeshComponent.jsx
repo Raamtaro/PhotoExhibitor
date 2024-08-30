@@ -94,7 +94,7 @@ const MeshComponent = ({...props}) => {
       requestAnimationFrame(updateMeshScale);
     } else {
       // Re-trigger the effect after a short delay if refs are not ready yet
-      setTimeout(updateMeshScale, 100);
+      setTimeout(updateMeshScale, 100); //This needs to be changed - right now just a way to get things working but not good for a long-term fix.
     }
   }, [screenSize, texture]);
 
