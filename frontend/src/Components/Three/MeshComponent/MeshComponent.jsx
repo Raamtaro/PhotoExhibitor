@@ -69,19 +69,36 @@ const MeshComponent = ({...props}) => {
 
  
 
-  useLayoutEffect(() => {
-    // Ensuring the effect runs only when refs and texture are ready
-      if (ref.current && meshRef.current) {
-        const bounds = ref.current.getBoundingClientRect();
-        console.log(bounds); // Should log during the initial render if bounds are ready
-        setQuadSize([bounds.width, bounds.height]);
-        meshRef?.current.scale.set(bounds.width, bounds.height, 1);
+  // useLayoutEffect(() => {
+  //   // Ensuring the effect runs only when refs and texture are ready
+  //     if (ref.current && meshRef.current) {
+  //       const bounds = ref.current.getBoundingClientRect();
+  //       console.log(bounds); // Should log during the initial render if bounds are ready
+  //       setQuadSize([bounds.width, bounds.height]);
+  //       meshRef?.current.scale.set(bounds.width, bounds.height, 1);
 
-        invalidate();
-      }
+  //       invalidate();
+  //     }
 
   
-  }, [screenSize]);
+  // }, [screenSize]);
+
+  useLayoutEffect(() => {
+    const updateMeshScale = () => {
+      if (ref.current && meshRef.current) {
+        const bounds = ref.current.getBoundingClientRect();
+        setQuadSize([bounds.width, bounds.height]);
+        meshRef.current.scale.set(bounds.width, bounds.height, 1);
+      }
+    };
+
+    if (texture && ref.current && meshRef.current) {
+      requestAnimationFrame(updateMeshScale);
+    } else {
+      // Re-trigger the effect after a short delay if refs are not ready yet
+      setTimeout(updateMeshScale, 100);
+    }
+  }, [screenSize, texture]);
 
   // useLayoutEffect(() => {
   //   if (meshRef.current) {
