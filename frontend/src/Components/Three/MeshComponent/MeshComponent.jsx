@@ -4,6 +4,8 @@ import { useFrame, invalidate, render } from '@react-three/fiber'
 import * as THREE from 'three'
 import useScreenSize from '../../../utils/useScreenSize/useScreenSize.js'
 
+import { lerp } from 'three/src/math/MathUtils.js'
+
 import MaterialComponent from '../Material/MaterialComponent.jsx'
 
 
@@ -20,6 +22,16 @@ const MeshComponent = ({...props}) => {
   const ref = useRef(null)
   const meshRef = useRef(null)
   const screenSize = useScreenSize()
+
+  const cursorPos = useRef(
+    {
+      current: {x: 0, y: 0},
+      target: {x: 0, y: 0},
+    }
+  )
+
+
+
   // const [renderTrigger, setRenderTrigger] = useState(0)
 
   //Set texture based on the image url (passed in via a prop, which then needs to get passed down)
@@ -67,21 +79,7 @@ const MeshComponent = ({...props}) => {
     
   }, [materialRef.current])
 
- 
 
-  // useLayoutEffect(() => {
-  //   // Ensuring the effect runs only when refs and texture are ready
-  //     if (ref.current && meshRef.current) {
-  //       const bounds = ref.current.getBoundingClientRect();
-  //       console.log(bounds); // Should log during the initial render if bounds are ready
-  //       setQuadSize([bounds.width, bounds.height]);
-  //       meshRef?.current.scale.set(bounds.width, bounds.height, 1);
-
-  //       invalidate();
-  //     }
-
-  
-  // }, [screenSize]);
 
   useLayoutEffect(() => {
     const updateMeshScale = () => {
@@ -100,24 +98,14 @@ const MeshComponent = ({...props}) => {
     }
   }, [screenSize, texture]);
 
-  // useLayoutEffect(() => {
-  //   if (meshRef.current) {
-  //     let bounds = ref.current.getBoundingClientRect();
-  //     setQuadSize([bounds.width, bounds.height]);
-  //     meshRef?.current.scale.set(bounds.width, bounds.height, 1);
-  //     // const observer = new IntersectionObserver(([entry]) => {
-  //     //   setIsIntersecting(entry.isIntersecting);
-  //     // });
-  //     // observer.observe(ref.current);
-  //   }
-  // }, [meshRef]);
 
-  useEffect(()=> {
-    console.log(materialRef.current)
-    console.log(meshRef.current)
+
+  // useEffect(()=> {
+  //   console.log(materialRef.current)
+  //   console.log(meshRef.current)
     
  
-  },[materialRef.current])
+  // },[materialRef.current])
 
 
   // if (!materialRef.current) {
