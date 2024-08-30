@@ -23,17 +23,6 @@ const MeshComponent = ({...props}) => {
   const meshRef = useRef(null)
   const screenSize = useScreenSize()
 
-  const cursorPos = useRef(
-    {
-      current: {x: 0, y: 0},
-      target: {x: 0, y: 0},
-    }
-  )
-
-
-
-  // const [renderTrigger, setRenderTrigger] = useState(0)
-
   //Set texture based on the image url (passed in via a prop, which then needs to get passed down)
   // useEffect(()=>{
   //   new THREE.TextureLoader().loadAsync(props.url).then((data) => {
@@ -41,6 +30,7 @@ const MeshComponent = ({...props}) => {
   //     setTexture(data)
   //   })
   // }, [])
+
   useEffect(() => {
     const loadTexture = async () => {
       
@@ -110,11 +100,11 @@ const MeshComponent = ({...props}) => {
   // },[materialRef.current])
 
 
-  // if (!materialRef.current) {
-  //   return (
-  //     <div>Loading...</div>
-  //   )
-  // }
+  if (loading) {
+    return (
+      <div>Loading...</div>
+    )
+  }
 
 
   return (
