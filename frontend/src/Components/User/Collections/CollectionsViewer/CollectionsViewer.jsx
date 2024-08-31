@@ -76,25 +76,6 @@ const CollectionsViewer = () => {
     getCollectionInfo()
   }, [id])
 
-  // useEffect(() => {
-  //   const handleMouseMove = (event) => {
-  //     // /**
-  //     //  * Test
-  //     //  */
-  //     // console.log(event.clientX / window.innerWidth, 1.0 - (event.clientY / window.innerHeight))
-  //     // return
-
-      
-  //   }
-  //   window.addEventListener('mousemove', handleMouseMove)
-
-  //   return () => {
-  //     window.removeEventListener('mousemove', handleMouseMove)
-  //   }
-  // }, [
-
-  // ])
-
   if (loading) {
     return (
       <div>Loading...</div>
@@ -111,7 +92,7 @@ const CollectionsViewer = () => {
             <div className="viewer-header-line line-author">{user?.name}</div>
           </header>
           <Scene />
-          <ReactLenis root autoRaf>
+          <ReactLenis root>
             <div className="collections-viewer-main">
               <div className="collections-grid">
                 {
