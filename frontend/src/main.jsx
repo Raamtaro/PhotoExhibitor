@@ -6,14 +6,17 @@ import { RouterProvider } from 'react-router-dom'
 import router from './Router/Routes.jsx'
 import { UserProvider } from './Contexts/UserContext.jsx'
 import { SmoothScrollProvider } from './Contexts/SmoothScrollContext.jsx'
+import { CursorContextProvider } from './Contexts/AbsoluteCursorContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <SmoothScrollProvider>
-      <UserProvider>
-        <RouterProvider router={router} />
-      </UserProvider>
-    </SmoothScrollProvider>
+
+      <SmoothScrollProvider>
+        <UserProvider>
+          <RouterProvider router={router} />
+        </UserProvider>
+      </SmoothScrollProvider>
+
   </StrictMode>
 )

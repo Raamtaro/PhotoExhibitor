@@ -17,6 +17,8 @@ import { calcFov, debounce, lerp } from '../../../../utils/utils'
 
 import Scene from '../../../Three/Scene'
 
+import { CursorContextProvider } from '../../../../Contexts/AbsoluteCursorContext'
+
 gsap.registerPlugin(useGSAP)
 
 const CollectionsViewer = () => {
@@ -26,17 +28,9 @@ const CollectionsViewer = () => {
   const [currentCollection, setCurrentCollection] = useState({})
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(true)
-  // const [scrollData, setScrollData] = useState({ scrollY: 0, scrollVelocity: 0 });
   const [error, setError] = useState('')
 
   const {scroll, scrollData} = useSmoothScrollContext()
-
-  // const scroll = useRef({
-  //   scrollY: 0,
-  //   scrollVelocity: 0
-  // })
-
-  // const lenis = useLenis()
 
   const cursorPos = useRef(
     {
@@ -44,24 +38,6 @@ const CollectionsViewer = () => {
       target: {x: 0, y: 0},
     }
   ) //Need to handle window cursorPositioning in this component, send to => MeshComponent
-
-  // useEffect(() => {
-  //   if (lenis) {
-  //     const updateScrollData = (e) => {
-  //       scroll.current.scrollY = window.scrollY;
-  //       scroll.current.scrollVelocity = e.velocity;
-  //       setScrollData({ scrollY: scroll.current.scrollY, scrollVelocity: scroll.current.scrollVelocity });
-  //     };
-
-  //     lenis.on('scroll', updateScrollData);
-
-  //     // Cleanup listener on unmount
-  //     return () => {
-  //       lenis.off('scroll', updateScrollData);
-  //     };
-  //   }
-  // }, [lenis]);
-
 
   useEffect(() => {
     console.log(scroll.current.scrollY, scroll.current.scrollVelocity);
@@ -100,25 +76,24 @@ const CollectionsViewer = () => {
     getCollectionInfo()
   }, [id])
 
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      // /**
-      //  * Test
-      //  */
-      // console.log(event.clientX / window.innerWidth, 1.0 - (event.clientY / window.innerHeight))
-      // return
+  // useEffect(() => {
+  //   const handleMouseMove = (event) => {
+  //     // /**
+  //     //  * Test
+  //     //  */
+  //     // console.log(event.clientX / window.innerWidth, 1.0 - (event.clientY / window.innerHeight))
+  //     // return
 
       
-    }
-    window.addEventListener('mousemove', handleMouseMove)
+  //   }
+  //   window.addEventListener('mousemove', handleMouseMove)
 
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-    }
-  }, [
+  //   return () => {
+  //     window.removeEventListener('mousemove', handleMouseMove)
+  //   }
+  // }, [
 
-  ])
-
+  // ])
 
   if (loading) {
     return (
@@ -129,24 +104,26 @@ const CollectionsViewer = () => {
   return (
     <>
       
-      
-        <header className="viewer-header">
-          <div className="viewer-header-line">This is the {currentCollection?.name} collection.</div>
-          <div className="viewer-header-line line-author">{user?.name}</div>
-        </header>
-        <Scene />
-        <ReactLenis root autoRaf>
-          <div className="collections-viewer-main">
-            <div className="collections-grid">
-              {
-                images.map((image, index) => (
-                  <MeshImageWrapper key={index} image={image} index={index}/>
-                ))
-              }
+      <CursorContextProvider>
+        
+          <header className="viewer-header">
+            <div className="viewer-header-line">This is the {currentCollection?.name} collection.</div>
+            <div className="viewer-header-line line-author">{user?.name}</div>
+          </header>
+          <Scene />
+          <ReactLenis root autoRaf>
+            <div className="collections-viewer-main">
+              <div className="collections-grid">
+                {
+                  images.map((image, index) => (
+                    <MeshImageWrapper key={index} image={image} index={index}/>
+                  ))
+                }
+              </div>
             </div>
-          </div>
-        </ReactLenis>
-      
+          </ReactLenis>
+        
+      </CursorContextProvider>
     </>
   )
 }
