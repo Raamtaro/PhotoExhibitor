@@ -5,6 +5,8 @@ import { useUser } from '../../../../Contexts/UserContext'
 import './styles/CollectionsViewer.css'
 import MeshImageWrapper from './MeshImageWrapper/MeshImageWrapper'
 
+import { useSmoothScrollContext } from '../../../../Contexts/SmoothScrollContext'
+
 import Lenis from 'lenis'
 import {ReactLenis, useLenis} from 'lenis/react'
 import gsap from 'gsap'
@@ -14,7 +16,6 @@ import { CustomEase } from 'gsap/all'
 import { calcFov, debounce, lerp } from '../../../../utils/utils'
 
 import Scene from '../../../Three/Scene'
-import MeshComponent from '../../../Three/MeshComponent/MeshComponent'
 
 gsap.registerPlugin(useGSAP)
 
@@ -25,15 +26,17 @@ const CollectionsViewer = () => {
   const [currentCollection, setCurrentCollection] = useState({})
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(true)
-  const [scrollData, setScrollData] = useState({ scrollY: 0, scrollVelocity: 0 });
+  // const [scrollData, setScrollData] = useState({ scrollY: 0, scrollVelocity: 0 });
   const [error, setError] = useState('')
 
-  const scroll = useRef({
-    scrollY: 0,
-    scrollVelocity: 0
-  })
+  const {scroll, scrollData} = useSmoothScrollContext()
+
+  // const scroll = useRef({
+  //   scrollY: 0,
+  //   scrollVelocity: 0
+  // })
+
   // const lenis = useLenis()
-  const lenis = useLenis()
 
   const cursorPos = useRef(
     {
@@ -43,36 +46,25 @@ const CollectionsViewer = () => {
   ) //Need to handle window cursorPositioning in this component, send to => MeshComponent
 
   // useEffect(() => {
-  //   // Listen to Lenis scroll events
   //   if (lenis) {
-  //     lenis.on('scroll', (e) => {
+  //     const updateScrollData = (e) => {
   //       scroll.current.scrollY = window.scrollY;
   //       scroll.current.scrollVelocity = e.velocity;
-  //     });
+  //       setScrollData({ scrollY: scroll.current.scrollY, scrollVelocity: scroll.current.scrollVelocity });
+  //     };
+
+  //     lenis.on('scroll', updateScrollData);
+
+  //     // Cleanup listener on unmount
+  //     return () => {
+  //       lenis.off('scroll', updateScrollData);
+  //     };
   //   }
-
   // }, [lenis]);
-  useEffect(() => {
-    if (lenis) {
-      const updateScrollData = (e) => {
-        scroll.current.scrollY = window.scrollY;
-        scroll.current.scrollVelocity = e.velocity;
-        setScrollData({ scrollY: scroll.current.scrollY, scrollVelocity: scroll.current.scrollVelocity });
-      };
 
-      lenis.on('scroll', updateScrollData);
-
-      // Cleanup listener on unmount
-      return () => {
-        lenis.off('scroll', updateScrollData);
-      };
-    }
-  }, [lenis]);
-
-  // addEffect((t)=> lenis.raf(t))
 
   useEffect(() => {
-    console.log(scrollData.scrollY, scrollData.scrollVelocity);
+    console.log(scroll.current.scrollY, scroll.current.scrollVelocity);
   }, [scrollData]);
 
   useEffect(()=>{
@@ -128,20 +120,6 @@ const CollectionsViewer = () => {
   ])
 
 
-
-  //debug statements
-  // useEffect(
-  //   ()=> 
-  //     {
-  //       console.log(currentCollection)
-  //       console.log(images)
-  //     }, 
-  //   [
-  //     currentCollection,
-  //     images
-  //   ]
-  // )
-
   if (loading) {
     return (
       <div>Loading...</div>
@@ -151,27 +129,24 @@ const CollectionsViewer = () => {
   return (
     <>
       
-      <header className="viewer-header">
-        <div className="viewer-header-line">This is the {currentCollection?.name} collection.</div>
-        <div className="viewer-header-line line-author">{user?.name}</div>
-      </header>
-      <Scene />
-      <ReactLenis root autoRaf>
-        <div className="collections-viewer-main">
-          <div className="collections-grid">
-            {
-              images.map((image, index) => (
-                //Gonna need to make a ThreeImage.jsx component using the View tool
-                // <figure className={`img-wrap img-wrap-${index + 1}`} key={index} >
-                //   <img className="img" src={image.url} alt={`Blur Exhibit ${index + 1}`} />
-                //   <figcaption><strong>BE{`${image.id < 10 ? '0' : ''}${image.id}`}</strong></figcaption>
-                // </figure>
-                <MeshImageWrapper key={index} image={image} index={index}/>
-              ))
-            }
+      
+        <header className="viewer-header">
+          <div className="viewer-header-line">This is the {currentCollection?.name} collection.</div>
+          <div className="viewer-header-line line-author">{user?.name}</div>
+        </header>
+        <Scene />
+        <ReactLenis root autoRaf>
+          <div className="collections-viewer-main">
+            <div className="collections-grid">
+              {
+                images.map((image, index) => (
+                  <MeshImageWrapper key={index} image={image} index={index}/>
+                ))
+              }
+            </div>
           </div>
-        </div>
-      </ReactLenis>
+        </ReactLenis>
+      
     </>
   )
 }

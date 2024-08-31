@@ -8,6 +8,8 @@ export const useSmoothScrollContext = () => useContext(SmoothScrollContext)
 //Provider
 export const SmoothScrollProvider = ({children}) => {
 
+    const [scrollData, setScrollData] = useState({ scrollY: 0, scrollVelocity: 0 });
+
     const scroll = useRef({
         scrollY: 0,
         scrollVelocity: 0
@@ -15,14 +17,28 @@ export const SmoothScrollProvider = ({children}) => {
     
     const lenis = useLenis()
 
-    const setUpLenis = () => {
+    useEffect(() => {
         if (lenis) {
-            lenis.on('scroll', ({ scrollY, velocity }) => {
-                scroll.current.scrollY = scrollY;
-                scroll.current.scrollVelocity = velocity;
-            });
+          const updateScrollData = (e) => {
+            scroll.current.scrollY = window.scrollY;
+            scroll.current.scrollVelocity = e.velocity;
+            setScrollData({ scrollY: scroll.current.scrollY, scrollVelocity: scroll.current.scrollVelocity });
+          };
+    
+          lenis.on('scroll', updateScrollData);
+    
+          // Cleanup listener on unmount
+          return () => {
+            lenis.off('scroll', updateScrollData);
+          };
         }
-    }
+    }, [lenis]);
+
+    return (
+        <SmoothScrollContext.Provider value = {{scroll, scrollData}}>
+            {children}
+        </SmoothScrollContext.Provider>
+    )
 
 
 }
