@@ -22,8 +22,8 @@ export const CursorContextProvider = ({children}) => {
     const cursorPos = useRef(
         {
             current: {
-                x: 0, 
-                y: 0
+                x: 0.5, 
+                y: 0.5
             },
             target: {
                 x: 0, 
@@ -79,10 +79,10 @@ export const CursorContextProvider = ({children}) => {
 
     ])
 
-    useEffect(() => {
-        console.log('target:', cursorPos.current.target.x, cursorPos.current.target.y)
-        console.log('current:', cursorPos.current.current.x, cursorPos.current.current.y)
-    }, [cursorDataTarget])
+    // useEffect(() => {
+    //     console.log('target:', cursorPos.current.target.x, cursorPos.current.target.y)
+    //     console.log('current:', cursorPos.current.current.x, cursorPos.current.current.y)
+    // }, [cursorDataTarget])
 
     return (
         <AbsoluteCursorContext.Provider value = {{cursorPos, cursorDataCurrent, cursorDataTarget}}>

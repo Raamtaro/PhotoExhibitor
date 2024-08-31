@@ -3,6 +3,7 @@ import { View } from '@react-three/drei'
 import { useFrame, invalidate, render } from '@react-three/fiber'
 import * as THREE from 'three'
 import useScreenSize from '../../../utils/useScreenSize/useScreenSize.js'
+import { useCursorContext } from '../../../Contexts/AbsoluteCursorContext.jsx'
 
 import { lerp } from 'three/src/math/MathUtils.js'
 
@@ -12,7 +13,7 @@ import MaterialComponent from '../Material/MaterialComponent.jsx'
 
 
 const MeshComponent = ({...props}) => {
-  // const [refMesh, setRefMesh] = useState(null)
+
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [texture, setTexture] = useState(null)
@@ -23,13 +24,16 @@ const MeshComponent = ({...props}) => {
   const meshRef = useRef(null)
   const screenSize = useScreenSize()
 
-  //Set texture based on the image url (passed in via a prop, which then needs to get passed down)
-  // useEffect(()=>{
-  //   new THREE.TextureLoader().loadAsync(props.url).then((data) => {
-  //     setTextureSize([data.image.width, data.image.height])
-  //     setTexture(data)
-  //   })
-  // }, [])
+  //MouseOver Stuff
+  const {cursorPos, cursorDataCurrent, cursorDataTarget } = useCursorContext()
+  const mouseOverPos = useRef(
+    {
+      current: {x: 0, y: 0},
+      target: {x: 0, y: 0}
+    }
+  )
+
+  //First Load Textures + Set Sizes
 
   useEffect(() => {
     const loadTexture = async () => {
@@ -49,8 +53,6 @@ const MeshComponent = ({...props}) => {
         setTexture(texture);
         setLoading(false);
        
-
-        // setRenderTrigger((prev)=> prev + 1)
       } catch (err) {
         console.error('Error loading texture:', err);
         setError('Failed to load texture');
@@ -62,12 +64,13 @@ const MeshComponent = ({...props}) => {
     
   }, [props.url]);
 
-  useEffect(() => {
-    if (materialRef.current) {
-      texture.needsUpdate
-    }
+  // useEffect(() => {
+  //   if (materialRef.current) {
+  //     console.log('I am run')
+  //     texture.needsUpdate
+  //   }
     
-  }, [materialRef.current])
+  // }, [materialRef.current])
 
 
 
@@ -88,16 +91,6 @@ const MeshComponent = ({...props}) => {
     }
   }, [screenSize, texture]);
 
-
-
-
-
-  // useEffect(()=> {
-  //   console.log(materialRef.current)
-  //   console.log(meshRef.current)
-    
- 
-  // },[materialRef.current])
 
 
   if (loading) {

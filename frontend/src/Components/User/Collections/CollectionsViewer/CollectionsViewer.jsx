@@ -30,19 +30,6 @@ const CollectionsViewer = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  const {scroll, scrollData} = useSmoothScrollContext()
-
-  const cursorPos = useRef(
-    {
-      current: {x: 0, y: 0},
-      target: {x: 0, y: 0},
-    }
-  ) //Need to handle window cursorPositioning in this component, send to => MeshComponent
-
-  useEffect(() => {
-    console.log(scroll.current.scrollY, scroll.current.scrollVelocity);
-  }, [scrollData]);
-
   useEffect(()=>{
     const token = localStorage.getItem('token')
     
@@ -79,6 +66,12 @@ const CollectionsViewer = () => {
   if (loading) {
     return (
       <div>Loading...</div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div>Error</div>
     )
   }
 
