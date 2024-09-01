@@ -1,4 +1,4 @@
-import React, {createContext, useState, useEffect, useContext, useRef} from "react";
+import React, {createContext, useState, useEffect, useContext, useRef, useLayoutEffect} from "react";
 import { lerp } from "../utils/utils";
 
 const AbsoluteCursorContext = createContext(null)
@@ -76,13 +76,12 @@ export const CursorContextProvider = ({children}) => {
             window.removeEventListener('mousemove', handleMouseMove)
         }
     }, [
-
+        //First Time Render should set the event listener up in the window
     ])
 
-    // useEffect(() => {
-    //     console.log('target:', cursorPos.current.target.x, cursorPos.current.target.y)
-    //     console.log('current:', cursorPos.current.current.x, cursorPos.current.current.y)
-    // }, [cursorDataTarget])
+    useLayoutEffect(() => {
+        console.log(children)
+    }, [children])
 
     return (
         <AbsoluteCursorContext.Provider value = {{cursorPos, cursorDataCurrent, cursorDataTarget}}>

@@ -64,16 +64,6 @@ const MeshComponent = ({...props}) => {
     
   }, [props.url]);
 
-  // useEffect(() => {
-  //   if (materialRef.current) {
-  //     console.log('I am run')
-  //     texture.needsUpdate
-  //   }
-    
-  // }, [materialRef.current])
-
-
-
   useLayoutEffect(() => {
     const updateMeshScale = () => {
       if (ref.current && meshRef.current) {
@@ -91,11 +81,43 @@ const MeshComponent = ({...props}) => {
     }
   }, [screenSize, texture]);
 
+  //Mouse Tracking stuff - mouseOverPos --{prop}--> MaterialComponent
+
+  /**
+   * First, set up event listener stuff which will 
+   */
+  //Mouse Positioning
+// useLayoutEffect(() => { //Refactoring this to include a timeout based Retry
+// This should be considered a TEMPORARY solution (if it works), and needs to be updated to be more reliable and not use timeouts.
+   
+//   const handleMousePos = (event) => {
+//     const bounds = ref.current.getBoundingClientRect()
+//     const x = event.offsetX / bounds.width
+//     const y = event.offsetY / bounds.height
+
+//     mouseOverPos.current.target.x = x
+//     mouseOverPos.current.target.y = y
+//   }
+//   console.log('loadingListener')
+//   ref.current.addEventListener('mousemove', handleMousePos)
+
+//   return () => ref.current.removeEventListener('mousemmove', handleMousePos)
+  
+
+//   }, [screenSize, ref])
+
+
 
 
   if (loading) {
     return (
       <div>Loading...</div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div>Error</div>
     )
   }
 
