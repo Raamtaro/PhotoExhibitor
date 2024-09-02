@@ -20,13 +20,13 @@ const MaterialComponent = forwardRef((props, ref)=> {
       uniforms: {
         uTime: new THREE.Uniform(0.0),
         uResolution: new THREE.Uniform(new THREE.Vector2(window.innerWidth, window.innerHeight)),
-        uCursor: new THREE.Uniform(new THREE.Vector2(0.5, 0.5)),
+        uCursor: new THREE.Uniform(new THREE.Vector2(0.0, 0.0)),
         uScrollVelocity: new THREE.Uniform(0.0),
         uTexture: new THREE.Uniform(texture),
         uTextureSize: new THREE.Uniform(new THREE.Vector2(textureSize[0], textureSize[1])),
         uQuadSize: new THREE.Uniform(new THREE.Vector2(quadSize[0], quadSize[1])),
         uMouseEnter: new THREE.Uniform(0.0),
-        uMouseOverPos: new THREE.Uniform(new THREE.Vector2(0.5, 0.5)),
+        uMouseOverPos: new THREE.Uniform(new THREE.Vector2(0.0, 0.0)),
       }
     }
   ), [texture, textureSize, quadSize])
@@ -34,6 +34,8 @@ const MaterialComponent = forwardRef((props, ref)=> {
   useFrame (({ clock }) => {
 
     ref.current.uniforms.uTime.value = clock.getElapsedTime()
+
+
     // ref.current.uniforms.uTexture.value = texture
     // ref.current.uniforms.uTexture.value.needsUpdate = true;
     // ref.current.uniforms.uTextureSize.value.x = textureSize[0],

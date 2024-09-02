@@ -15,9 +15,9 @@ varying vec2 vUv;
 varying vec2 vUvCover;
 
 vec3 rgbShift(sampler2D textureimage, vec2 uv, vec2 offset) {
-    float r = texture2D(textureimage, uv + offset).r;
-    float g = texture2D(textureimage, uv + .5  * offset).g;
-    float b = texture2D(textureimage, uv - offset).b;
+    float r = texture2D(textureimage, uv + 0.01 * offset + vec2(0.0, uScrollVelocity) * 0.003).r;
+    float g = texture2D(textureimage, uv + .05  * offset - 0.0002*vec2(0.0, uScrollVelocity)).g;
+    float b = texture2D(textureimage, uv - 0.01 * offset - vec2(0.0, uScrollVelocity)*0.007).b;
 
     return vec3(r, g, b);
 }
