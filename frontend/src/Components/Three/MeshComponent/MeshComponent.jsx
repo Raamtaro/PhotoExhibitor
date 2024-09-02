@@ -5,6 +5,8 @@ import useScreenSize from '../../../utils/useScreenSize/useScreenSize.js'
 import { useCursorContext } from '../../../Contexts/AbsoluteCursorContext.jsx'
 import MaterialComponent from '../Material/MaterialComponent.jsx'
 
+import { lerp } from '../../../utils/utils.js'
+
 import CustomEase from 'gsap/CustomEase'
 import gsap from 'gsap'
 
@@ -33,6 +35,13 @@ const MeshComponent = ({...props}) => {
       y: 0
     }
   )
+  const [mouseOverCurrentData, setMouseOverCurrentData] = useState(
+    {
+      x: 0,
+      y: 0
+    }
+  )
+  
   const mouseOverPos = useRef(
     {
       current: {x: 0, y: 0},
@@ -59,6 +68,8 @@ const MeshComponent = ({...props}) => {
         setTextureSize([texture.image.width, texture.image.height]);
         setTexture(texture);
         setLoading(false);
+
+        texture.needsUpdate = true
        
       } catch (err) {
         console.error('Error loading texture:', err);
@@ -111,6 +122,14 @@ const MeshComponent = ({...props}) => {
             x: mouseOverPos.current.target.x,
             y: mouseOverPos.current.target.y
           })
+
+          mouseOverPos.current.current.x = lerp(mouseOverPos.current.current.x, mouseOverPos.current.target.x, 0.05)
+          mouseOverPos.current.current.y = lerp(mouseOverPos.current.current.y, mouseOverPos.current.target.y, 0.05)
+
+          // setMouseOverCurrentData({
+          //   x: mouseOverPos.current.current.x,
+          //   y: mouseOverPos.current.current.y
+          // })
         };
 
         console.log('loadingListener');
@@ -180,8 +199,13 @@ const MeshComponent = ({...props}) => {
         
         const handleMouseLeave = () => {
           gsap.to(
-            mouseEnter.current, {
+            [mouseEnter.current], {
               value: 0, duration: 0.6, ease: CustomEase.create('custom', '0.4, 0, 0.2, 1')
+            }
+          )          
+          gsap.to(
+            [mouseOverPos.current.current], {
+              x: 0,y:0, duration: 0.6, ease: CustomEase.create('custom', '0.4, 0, 0.2, 1')
             }
           )
           // setMouseEnterData(mouseEnter.current.value)
@@ -203,25 +227,27 @@ const MeshComponent = ({...props}) => {
     
   ])
 
-  useEffect(()=> { //Test
-    if (mouseEnter.current) {
-      console.log(mouseEnter.current.value, mouseEnterData)
-    }
-  }, [
-    mouseEnterData
-  ])
-
-
-
-
-
-  // useEffect(()=> {
-  //   if (mouseOverPos.current) {
-  //     console.log(mouseOverPos.current.target.x, mouseOverPos.current.target.y)
+  // useEffect(()=> { //Test
+  //   if (mouseEnter.current) {
+  //     console.log(mouseEnter.current.value, mouseEnterData)
   //   }
-  // },[
-  //   mouseOverTargetData
+  // }, [
+  //   mouseEnterData
   // ])
+
+
+
+
+
+  useEffect(()=> {
+    if (mouseOverPos.current) {
+      console.log('target:', mouseOverPos.current.target.x, mouseOverPos.current.target.y)
+      console.log('current:', mouseOverPos.current.current.x, mouseOverPos.current.current.y)
+    }
+  },[
+    mouseOverTargetData,
+    mouseOverCurrentData
+  ])
 
 
 
