@@ -26,6 +26,12 @@ const MeshComponent = ({...props}) => {
 
   //MouseOver Stuff
   const {cursorPos, cursorDataCurrent, cursorDataTarget } = useCursorContext()
+  const [mouseOverTargetData, setMouseOverTargetData] = useState(
+    {
+      x: 0,
+      y: 0
+    }
+  )
   const mouseOverPos = useRef(
     {
       current: {x: 0, y: 0},
@@ -87,24 +93,57 @@ const MeshComponent = ({...props}) => {
    * First, set up event listener stuff which will 
    */
   //Mouse Positioning
-// useLayoutEffect(() => { //Refactoring this to include a timeout based Retry
-// This should be considered a TEMPORARY solution (if it works), and needs to be updated to be more reliable and not use timeouts.
-   
-//   const handleMousePos = (event) => {
-//     const bounds = ref.current.getBoundingClientRect()
-//     const x = event.offsetX / bounds.width
-//     const y = event.offsetY / bounds.height
+  useLayoutEffect(() => {
+    let timeoutId;
 
-//     mouseOverPos.current.target.x = x
-//     mouseOverPos.current.target.y = y
-//   }
-//   console.log('loadingListener')
-//   ref.current.addEventListener('mousemove', handleMousePos)
+    const attachListener = () => {
+      if (ref.current) {
+        const handleMousePos = (event) => {
+          const bounds = ref.current.getBoundingClientRect();
+          const x = event.offsetX / bounds.width;
+          const y = event.offsetY / bounds.height;
 
-//   return () => ref.current.removeEventListener('mousemmove', handleMousePos)
-  
+          mouseOverPos.current.target.x = x;
+          mouseOverPos.current.target.y = y;
 
-//   }, [screenSize, ref])
+          setMouseOverTargetData({
+            x: mouseOverPos.current.target.x,
+            y: mouseOverPos.current.target.y
+          })
+        };
+
+        console.log('loadingListener');
+        ref.current.addEventListener('mousemove', handleMousePos);
+
+        return () => {
+          ref.current.removeEventListener('mousemove', handleMousePos);
+        };
+      } else {
+        // Retry after a short delay if ref.current is not ready yet
+        //THIS IS STRICTLY A TEMPORARY FIX - SHOULD BE INSPECTED UPON CLOSELY TO MAKE MORE RELIABLE.
+        timeoutId = setTimeout(attachListener, 100);
+      }
+    };
+
+    attachListener();
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      if (ref.current) {
+        ref.current.removeEventListener('mousemove', handleMousePos);
+      }
+    };
+  }, [screenSize, ref]);
+
+  useEffect(()=> {
+    if (mouseOverPos.current) {
+      console.log(mouseOverPos.current.target.x, mouseOverPos.current.target.y)
+    }
+  },[
+    mouseOverTargetData
+  ])
 
 
 
