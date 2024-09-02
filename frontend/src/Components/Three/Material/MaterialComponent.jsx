@@ -5,7 +5,7 @@ import fragment from './shaders/fragment.glsl'
 import vertex from './shaders/vertex.glsl'
 
 const MaterialComponent = forwardRef((props, ref)=> {
-  const {texture, textureSize, quadSize} = props
+  const {texture, textureSize, quadSize, mouseOverPos} = props
 
   const shaderMaterial = useMemo(() => new THREE.ShaderMaterial(
     {

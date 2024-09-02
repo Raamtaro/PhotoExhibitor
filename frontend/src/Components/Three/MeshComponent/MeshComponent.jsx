@@ -1,16 +1,9 @@
 import React, {useState, useEffect, useRef, useLayoutEffect} from 'react'
 import { View } from '@react-three/drei'
-import { useFrame, invalidate, render } from '@react-three/fiber'
 import * as THREE from 'three'
 import useScreenSize from '../../../utils/useScreenSize/useScreenSize.js'
 import { useCursorContext } from '../../../Contexts/AbsoluteCursorContext.jsx'
-
-import { lerp } from 'three/src/math/MathUtils.js'
-
 import MaterialComponent from '../Material/MaterialComponent.jsx'
-
-
-
 
 const MeshComponent = ({...props}) => {
 
@@ -104,7 +97,7 @@ const MeshComponent = ({...props}) => {
           const y = event.offsetY / bounds.height;
 
           mouseOverPos.current.target.x = x;
-          mouseOverPos.current.target.y = y;
+          mouseOverPos.current.target.y = 1.0 - y;
 
           setMouseOverTargetData({
             x: mouseOverPos.current.target.x,
@@ -127,15 +120,44 @@ const MeshComponent = ({...props}) => {
 
     attachListener();
 
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      if (ref.current) {
-        ref.current.removeEventListener('mousemove', handleMousePos);
-      }
-    };
+    // return () => {
+    //   if (timeoutId) {
+    //     clearTimeout(timeoutId);
+    //   }
+    //   if (ref.current) {
+    //     ref.current.removeEventListener('mousemove', handleMousePos);
+    //   }
+    // };
   }, [screenSize, ref]);
+
+
+  /**
+   * Next Up for mouse stuff is mouseExit/Enter
+   */
+
+  useLayoutEffect(()=> { //Mouse Enter
+    let timeoutId
+    const attachListener = () => {
+
+    }
+  }, [
+    ref,
+    screenSize
+  ])
+
+  useLayoutEffect(()=> { //Mouse Exit
+    let timeoutId
+    const attachListener = () => {
+
+    }
+  }, [
+    ref,
+    screenSize
+  ])
+
+
+
+
 
   useEffect(()=> {
     if (mouseOverPos.current) {
@@ -170,6 +192,7 @@ const MeshComponent = ({...props}) => {
             texture={texture}
             textureSize={textureSize}
             quadSize={quadSize}
+            mouseOverPos={mouseOverPos}
           />
           <planeGeometry args={[1, 1]}/>
         </mesh>
