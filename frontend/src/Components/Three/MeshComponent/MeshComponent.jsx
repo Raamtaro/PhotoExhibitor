@@ -5,6 +5,11 @@ import useScreenSize from '../../../utils/useScreenSize/useScreenSize.js'
 import { useCursorContext } from '../../../Contexts/AbsoluteCursorContext.jsx'
 import MaterialComponent from '../Material/MaterialComponent.jsx'
 
+import CustomEase from 'gsap/CustomEase'
+import gsap from 'gsap'
+
+gsap.registerPlugin(CustomEase)
+
 const MeshComponent = ({...props}) => {
 
   const [loading, setLoading] = useState(true)
@@ -15,6 +20,9 @@ const MeshComponent = ({...props}) => {
   const materialRef = useRef(null)
   const ref = useRef(null)
   const meshRef = useRef(null)
+  const mouseEnter = useRef({value: 0})
+  const [mouseEnterData, setMouseEnterData] = useState(0)
+  
   const screenSize = useScreenSize()
 
   //MouseOver Stuff
@@ -120,7 +128,7 @@ const MeshComponent = ({...props}) => {
 
     attachListener();
 
-    // return () => {
+    // return () => { //Removed this because it caused bugs on dismount. The logic in the attachListener() function suffices (for now)
     //   if (timeoutId) {
     //     clearTimeout(timeoutId);
     //   }
@@ -128,7 +136,7 @@ const MeshComponent = ({...props}) => {
     //     ref.current.removeEventListener('mousemove', handleMousePos);
     //   }
     // };
-  }, [screenSize, ref]);
+  }, [ref]);
 
 
   /**
@@ -138,34 +146,82 @@ const MeshComponent = ({...props}) => {
   useLayoutEffect(()=> { //Mouse Enter
     let timeoutId
     const attachListener = () => {
-
+      if (ref.current) {
+        
+        const handleMouseLeave = () => {
+          gsap.to(
+            mouseEnter.current, {
+              value: 1, duration: 0.6, ease: CustomEase.create('custom', '0.4, 0, 0.2, 1')
+            }
+          )
+          setMouseEnterData(mouseEnter.current.value)
+        }
+        setMouseEnterData(mouseEnter.current.value)
+        ref.current.addEventListener('mouseenter', handleMouseLeave)
+        return () => {
+          ref.current.removeEventListener('mouseenter', handleMouseLeave)
+        }
+      } else {
+        timeoutId = setTimeout(attachListener, 100)
+      }
     }
+
+    attachListener()
   }, [
     ref,
-    screenSize
+    
   ])
+
 
   useLayoutEffect(()=> { //Mouse Exit
     let timeoutId
     const attachListener = () => {
-
+      if (ref.current) {
+        
+        const handleMouseLeave = () => {
+          gsap.to(
+            mouseEnter.current, {
+              value: 0, duration: 0.6, ease: CustomEase.create('custom', '0.4, 0, 0.2, 1')
+            }
+          )
+          // setMouseEnterData(mouseEnter.current.value)
+          setMouseEnterData(mouseEnter.current.value)
+        }
+        // setMouseEnterData(mouseEnter.current.value)
+        ref.current.addEventListener('mouseleave', handleMouseLeave)
+        return () => {
+          ref.current.removeEventListener('mouseleave', handleMouseLeave)
+        }
+      } else {
+        timeoutId = setTimeout(attachListener, 100)
+      }
     }
+
+    attachListener()
   }, [
     ref,
-    screenSize
+    
   ])
 
-
-
-
-
-  useEffect(()=> {
-    if (mouseOverPos.current) {
-      console.log(mouseOverPos.current.target.x, mouseOverPos.current.target.y)
+  useEffect(()=> { //Test
+    if (mouseEnter.current) {
+      console.log(mouseEnter.current.value)
     }
-  },[
-    mouseOverTargetData
+  }, [
+    mouseEnterData
   ])
+
+
+
+
+
+  // useEffect(()=> {
+  //   if (mouseOverPos.current) {
+  //     console.log(mouseOverPos.current.target.x, mouseOverPos.current.target.y)
+  //   }
+  // },[
+  //   mouseOverTargetData
+  // ])
 
 
 

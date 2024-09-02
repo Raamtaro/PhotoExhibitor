@@ -26,9 +26,7 @@ const MaterialComponent = forwardRef((props, ref)=> {
   ), [texture, textureSize, quadSize])
 
   useFrame (({ clock }) => {
-    // console.log('frame', ref.current)
-    // console.log(ref.current)
-    // ref.current.needsUpdate = true;
+
     ref.current.uniforms.uTime.value = clock.getElapsedTime()
     ref.current.uniforms.uTexture.value = texture
     ref.current.uniforms.uTexture.value.needsUpdate = true;
@@ -36,7 +34,7 @@ const MaterialComponent = forwardRef((props, ref)=> {
     ref.current.uniforms.uTextureSize.value.y = textureSize[1],
     ref.current.uniforms.uQuadSize.value.x = quadSize[0],
     ref.current.uniforms.uQuadSize.value.y = quadSize[1]
-    // console.log(ref.current.uniforms.uTextureSize)
+    
   })
 
 
