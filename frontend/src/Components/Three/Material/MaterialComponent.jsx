@@ -4,8 +4,10 @@ import { extend, useFrame } from '@react-three/fiber';
 import fragment from './shaders/fragment.glsl'
 import vertex from './shaders/vertex.glsl'
 
+import { lerp } from '../../../utils/utils';
+
 const MaterialComponent = forwardRef((props, ref)=> {
-  const {texture, textureSize, quadSize, mouseOverPos} = props
+  const {texture, textureSize, quadSize, mouseOverPos, mouseEnter} = props
 
   const shaderMaterial = useMemo(() => new THREE.ShaderMaterial(
     {
@@ -26,6 +28,8 @@ const MaterialComponent = forwardRef((props, ref)=> {
   ), [texture, textureSize, quadSize])
 
   useFrame (({ clock }) => {
+
+
 
     ref.current.uniforms.uTime.value = clock.getElapsedTime()
     ref.current.uniforms.uTexture.value = texture

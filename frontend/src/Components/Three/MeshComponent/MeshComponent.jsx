@@ -148,7 +148,7 @@ const MeshComponent = ({...props}) => {
     const attachListener = () => {
       if (ref.current) {
         
-        const handleMouseLeave = () => {
+        const handleMouseEnter = () => {
           gsap.to(
             mouseEnter.current, {
               value: 1, duration: 0.6, ease: CustomEase.create('custom', '0.4, 0, 0.2, 1')
@@ -157,9 +157,9 @@ const MeshComponent = ({...props}) => {
           setMouseEnterData(mouseEnter.current.value)
         }
         setMouseEnterData(mouseEnter.current.value)
-        ref.current.addEventListener('mouseenter', handleMouseLeave)
+        ref.current.addEventListener('mouseenter', handleMouseEnter)
         return () => {
-          ref.current.removeEventListener('mouseenter', handleMouseLeave)
+          ref.current.removeEventListener('mouseenter', handleMouseEnter)
         }
       } else {
         timeoutId = setTimeout(attachListener, 100)
@@ -249,6 +249,7 @@ const MeshComponent = ({...props}) => {
             textureSize={textureSize}
             quadSize={quadSize}
             mouseOverPos={mouseOverPos}
+            mouseEnter = {mouseEnter}
           />
           <planeGeometry args={[1, 1]}/>
         </mesh>
