@@ -205,7 +205,7 @@ const MeshComponent = ({...props}) => {
 
   useEffect(()=> { //Test
     if (mouseEnter.current) {
-      console.log(mouseEnter.current.value)
+      console.log(mouseEnter.current.value, mouseEnterData)
     }
   }, [
     mouseEnterData

@@ -29,7 +29,8 @@ const MaterialComponent = forwardRef((props, ref)=> {
 
   useFrame (({ clock }) => {
 
-
+    mouseOverPos.current.current.x = lerp(mouseOverPos.current.current.x, mouseOverPos.current.target.x, 0.05)
+    mouseOverPos.current.current.y = lerp(mouseOverPos.current.current.y, mouseOverPos.current.target.y, 0.05)
 
     ref.current.uniforms.uTime.value = clock.getElapsedTime()
     ref.current.uniforms.uTexture.value = texture
@@ -37,7 +38,10 @@ const MaterialComponent = forwardRef((props, ref)=> {
     ref.current.uniforms.uTextureSize.value.x = textureSize[0],
     ref.current.uniforms.uTextureSize.value.y = textureSize[1],
     ref.current.uniforms.uQuadSize.value.x = quadSize[0],
-    ref.current.uniforms.uQuadSize.value.y = quadSize[1]
+    ref.current.uniforms.uQuadSize.value.y = quadSize[1],
+    ref.current.uniforms.uMouseOverPos.value.x = mouseOverPos.current.current.x,
+    ref.current.uniforms.uMouseOverPos.value.y = mouseOverPos.current.current.y,
+    ref.current.uniforms.uMouseEnter.value = mouseEnter.current.value
     
   })
 
