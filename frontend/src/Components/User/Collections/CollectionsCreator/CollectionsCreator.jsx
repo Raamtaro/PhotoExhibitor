@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 import './styles/CollectionsCreator.css'
 
 const  CollectionsCreator = () => {
@@ -8,6 +9,8 @@ const  CollectionsCreator = () => {
     const [description, setDescription] = useState('')
     const [error, setError] = useState('')
     const [successMessage, setSucessMessage] = useState('')
+
+    const navigate = useNavigate()
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -41,10 +44,12 @@ const  CollectionsCreator = () => {
             if (response.ok) {
                 const result = await response.json()
                 console.log(result)
-                setSucessMessage('Collection Created Succesfully!')
+                setSucessMessage('Collection Created Succesfully!, Rerouting...')
                 setError('')
                 setDescription('')
                 setCollectionName('')
+
+                navigate(`/user/collections/${result.collection.id}/edit`)
 
             }
             

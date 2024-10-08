@@ -239,15 +239,15 @@ const MeshComponent = ({...props}) => {
 
 
 
-  useEffect(()=> {
-    if (mouseOverPos.current) {
-      console.log('target:', mouseOverPos.current.target.x, mouseOverPos.current.target.y)
-      console.log('current:', mouseOverPos.current.current.x, mouseOverPos.current.current.y)
-    }
-  },[
-    mouseOverTargetData,
-    mouseOverCurrentData
-  ])
+  // useEffect(()=> {
+  //   if (mouseOverPos.current) {
+  //     console.log('target:', mouseOverPos.current.target.x, mouseOverPos.current.target.y)
+  //     console.log('current:', mouseOverPos.current.current.x, mouseOverPos.current.current.y)
+  //   }
+  // },[
+  //   mouseOverTargetData,
+  //   mouseOverCurrentData
+  // ])
 
 
 

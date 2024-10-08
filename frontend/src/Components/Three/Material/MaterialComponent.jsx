@@ -5,6 +5,7 @@ import fragment from './shaders/fragment.glsl'
 import vertex from './shaders/vertex.glsl'
 import { useCursorContext } from '../../../Contexts/AbsoluteCursorContext';
 import { useSmoothScrollContext } from '../../../Contexts/SmoothScrollContext';
+import useScreenSize from '../../../utils/useScreenSize/useScreenSize';
 
 import { lerp } from '../../../utils/utils';
 
@@ -12,6 +13,7 @@ const MaterialComponent = forwardRef((props, ref)=> {
   const {texture, textureSize, quadSize, mouseOverPos, mouseEnter} = props
   const {cursorPos} = useCursorContext()
   const {scroll} = useSmoothScrollContext()
+  const screenSize = useScreenSize()
 
   const shaderMaterial = useMemo(() => new THREE.ShaderMaterial(
     {
@@ -19,9 +21,10 @@ const MaterialComponent = forwardRef((props, ref)=> {
       fragmentShader: fragment,
       uniforms: {
         uTime: new THREE.Uniform(0.0),
-        uResolution: new THREE.Uniform(new THREE.Vector2(window.innerWidth, window.innerHeight)),
+        uResolution: new THREE.Uniform(new THREE.Vector2(screenSize.width, screenSize.height)),
         uCursor: new THREE.Uniform(new THREE.Vector2(0.0, 0.0)),
         uScrollVelocity: new THREE.Uniform(0.0),
+        uMouseVelocity: new THREE.Uniform(0.0),
         uTexture: new THREE.Uniform(texture),
         uTextureSize: new THREE.Uniform(new THREE.Vector2(textureSize[0], textureSize[1])),
         uQuadSize: new THREE.Uniform(new THREE.Vector2(quadSize[0], quadSize[1])),
@@ -48,6 +51,7 @@ const MaterialComponent = forwardRef((props, ref)=> {
     ref.current.uniforms.uMouseOverPos.value.y = mouseOverPos.current.current.y
     ref.current.uniforms.uMouseEnter.value = mouseEnter.current.value
     ref.current.uniforms.uScrollVelocity.value = scroll.current.scrollVelocity
+    ref.current.uniforms.uMouseVelocity.value = Math.sqrt( (mouseOverPos.current.target.x - mouseOverPos.current.current.x)**2 + (mouseOverPos.current.target.y - mouseOverPos.current.current.y)**2 )
     
   })
 

@@ -10,8 +10,8 @@ const AllCollections = () => {
     const navigate = useNavigate()
     const {user} = useUser()
 
-    const handleCollectionNavigation = (id, type) => {
-        navigate(`/user/collections/${id}/${type}`)
+    const handleCollectionNavigation = (id) => {
+        navigate(`/user/collections/${id}/edit`)
 
     }
 
@@ -60,7 +60,7 @@ const AllCollections = () => {
         <>
             {error && <div className="error-message">{error}</div>}
             <div className="my-collections-main">
-                <button onClick={() => handleCollectionNavigation(myCollections[0].id, "edit")}>Go to the First post</button>
+                <button onClick={() => handleCollectionNavigation(myCollections[0].id)}>Go to the First post</button>
             </div>
         </>
     )

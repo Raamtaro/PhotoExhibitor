@@ -5,15 +5,10 @@ import { useUser } from '../../../../Contexts/UserContext'
 import './styles/CollectionsViewer.css'
 import MeshImageWrapper from './MeshImageWrapper/MeshImageWrapper'
 
-import { useSmoothScrollContext } from '../../../../Contexts/SmoothScrollContext'
-
-import Lenis from 'lenis'
 import {ReactLenis, useLenis} from 'lenis/react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { CustomEase } from 'gsap/all'
 
-import { calcFov, debounce, lerp } from '../../../../utils/utils'
 
 import Scene from '../../../Three/Scene'
 
