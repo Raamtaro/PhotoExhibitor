@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
 
+import './styles/AllCollections.css'
+
 const AllCollections = () => {
 
     const [loading, setLoading] = useState(true)
@@ -56,12 +58,21 @@ const AllCollections = () => {
         )
     }
 
+    if (error) {
+        return (
+          <div>Error: {error} </div>
+        )
+      }
+
     return (
         <>
-            {error && <div className="error-message">{error}</div>}
-            <div className="my-collections-main">
-                <button onClick={() => handleCollectionNavigation(myCollections[0].id)}>Go to the First post</button>
-            </div>
+            <section className="viewer-section">
+                {
+                    myCollections.map((collection, index) => (
+                        <span key={index} onClick={() => handleCollectionNavigation(collection.id)} href="">{collection.name}</span>
+                    ))
+                }
+            </section>
         </>
     )
 }

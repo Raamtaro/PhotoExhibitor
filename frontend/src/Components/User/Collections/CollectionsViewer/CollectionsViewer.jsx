@@ -5,14 +5,13 @@ import { useUser } from '../../../../Contexts/UserContext'
 import './styles/CollectionsViewer.css'
 import MeshImageWrapper from './MeshImageWrapper/MeshImageWrapper'
 
-import {ReactLenis, useLenis} from 'lenis/react'
+
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 
-import Scene from '../../../Three/Scene'
 
-import { CursorContextProvider } from '../../../../Contexts/AbsoluteCursorContext'
+
 
 gsap.registerPlugin(useGSAP)
 
@@ -71,28 +70,20 @@ const CollectionsViewer = () => {
   }
 
   return (
-    <>
-      
-      <CursorContextProvider>
-        
+    <> 
           <header className="viewer-header">
-            <div className="viewer-header-line">This is the {currentCollection?.name} collection.</div>
-            <div className="viewer-header-line line-author">{user?.name}</div>
+            <span className="viewer-header-line">{currentCollection?.name}</span>
+            <span className="viewer-header-line line-author">{user?.name}</span>
           </header>
-          <Scene />
-          <ReactLenis root>
-            <div className="collections-viewer-main">
-              <div className="collections-grid">
-                {
-                  images.map((image, index) => (
-                    <MeshImageWrapper key={index} image={image} index={index}/>
-                  ))
-                }
-              </div>
+          <section className="collections-viewer-main">
+            <div className="collections-grid">
+              {
+                images.map((image, index) => (
+                  <MeshImageWrapper key={index} image={image} index={index}/>
+                ))
+              }
             </div>
-          </ReactLenis>
-        
-      </CursorContextProvider>
+          </section>
     </>
   )
 }
