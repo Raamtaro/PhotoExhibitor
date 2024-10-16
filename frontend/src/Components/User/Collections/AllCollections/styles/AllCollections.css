@@ -1,8 +1,16 @@
+h1 {
+    font-weight: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 .viewer-section > span {
     font-family: 'Le murmure', sans-serif;
     font-size: 5.75rem;
     margin: 1rem;
     width: 15ch;
+    cursor: pointer;
 }
 
 .viewer-section {

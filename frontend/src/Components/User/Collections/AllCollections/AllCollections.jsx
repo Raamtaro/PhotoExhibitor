@@ -66,6 +66,9 @@ const AllCollections = () => {
 
     return (
         <>
+            <h1>
+                Update a Collection
+            </h1>
             <section className="viewer-section">
                 {
                     myCollections.map((collection, index) => (
