@@ -25,9 +25,11 @@ footer {
   top: 0;
   right: 0;
   height: auto;
-  padding: 10px;
+  padding-top: 1.5rem;
+  padding-right: 1.5rem;
   font-size: .75rem;
   font-weight: 100;
+
   
 
 }

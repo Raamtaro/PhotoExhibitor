@@ -2,6 +2,25 @@ import React, {useState, useEffect} from 'react'
 
 const MeshImageWrapper = ({image, index}) => {
     const [aspectRatio, setAspectRatio] = useState(1)
+
+
+    //Dynamically assign grid positions
+    const gridPositions = [
+        { column: '2 / span 3' },
+        { column: '4 / span 3' },
+        { column: '3 / span 3' },
+        { column: '1 / span 3' },
+        { column: '4 / span 3' },
+        { column: '3 / span 3' },
+        { column: '1 / span 3' },
+    ];
+
+    const position = gridPositions[index % 7];
+    const style = {
+        gridColumn: position.column,
+        gridRow: index + 1, // Ensure each image is on a unique row
+    };
+
     useEffect(()=> {
         const img = new Image()
         img.src = image.url
@@ -12,8 +31,9 @@ const MeshImageWrapper = ({image, index}) => {
     }, [image.url])
     return (
         <>
-            <figure className={`img-wrap img-wrap-${index + 1}`}
-                style={{height: `calc(100vw * ${aspectRatio} * .60)`}}
+            <figure className={`img-wrap`}
+                style={{...style, height: `calc((100vw * 0.40))`
+            }}
             >
                 <img className="img" src={image.url} alt={`Blur Exhibit ${index + 1}`} />
                 {/* <MeshComponent 
