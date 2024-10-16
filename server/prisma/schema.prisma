@@ -33,8 +33,6 @@ model Images {
   url String //will store the Cloudinary URL
   description String?
 
-
-
   owner Users @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId Int
   collection Collections @relation(fields: [collectionId], references: [id], onDelete: Cascade)
@@ -48,6 +46,7 @@ model Collections {
   updatedAt DateTime @updatedAt @default(now())
   name String @unique
   description String?
+  published Boolean @default(false)
 
   owner Users @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId Int
