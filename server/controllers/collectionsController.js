@@ -177,7 +177,8 @@ const updateCollection = asyncHandler( async (req, res) => {
      */
 
     const client = req.user
-    const {name, description, id} = req.body
+    const {name, description} = req.body
+    const id = parseInt(req.params.id)
     const updateData = {}
 
     if (!name && !description) {
@@ -220,9 +221,23 @@ const updateCollection = asyncHandler( async (req, res) => {
     }
 })
 
+const setPublishStatus = asyncHandler( async(req, res)=> {
+    const client = req.user
+    
+    const id = parseInt(req.params.id)
+
+    //user shouldn't be able to publish a collection which doesn't belong to them... so, get collection, check against user id, then set publish to whichever I want
+    //error checks for whether they included a publish status
+
+
+
+    
+})
+
+
 const deleteCollection = asyncHandler( async (req, res) => {
     const client = req.user
-    const id = req.body.id
+    const id = parseInt(req.params.id)
 
     if (!id) {
         return res.status(400).json({error: "Must include an Id"})
@@ -265,5 +280,6 @@ export default {
     getCollection,
     createCollection,
     updateCollection,
-    deleteCollection
+    deleteCollection,
+    setPublishStatus
 }
