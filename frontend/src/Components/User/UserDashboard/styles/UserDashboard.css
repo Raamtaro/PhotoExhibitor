@@ -1,0 +1,22 @@
+.user-home-section>h2 {
+    padding-block: 1.75rem;
+}
+
+.all-collections-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+}
+
+figure {
+    padding: 1.5rem;
+}
+
+.all-collections-list-item > figure > img {
+    width: 300px;
+    height: 450px;
+
+    padding-bottom: 1rem;
+
+}

@@ -54,3 +54,9 @@ main {
   font-weight: 400;
   font-style: normal;
 }
+
+section {
+  padding-block: 4rem;
+  padding-left: 2.75rem;
+  padding-right: 2.75rem;
+}

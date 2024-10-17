@@ -36,10 +36,6 @@ const MeshImageWrapper = ({image, index}) => {
             }}
             >
                 <img className="img" src={image.url} alt={`Blur Exhibit ${index + 1}`} />
-                {/* <MeshComponent 
-                    url={image.url}
-                    className="img"
-                /> */}
                 <figcaption><strong>BE{`${image.id < 10 ? '0' : ''}${image.id}`}</strong></figcaption>
             </figure>
         </>
