@@ -23,6 +23,7 @@ const getAllCollections = asyncHandler( async(req, res) => {
                         name: true
                     }
                 },
+                published: true
 
             }
         })
@@ -222,16 +223,59 @@ const updateCollection = asyncHandler( async (req, res) => {
 })
 
 const setPublishStatus = asyncHandler( async(req, res)=> {
-    const client = req.user
-    
+
+    const client = req.user   
     const id = parseInt(req.params.id)
+    const {published} = req.body
 
     //user shouldn't be able to publish a collection which doesn't belong to them... so, get collection, check against user id, then set publish to whichever I want
     //error checks for whether they included a publish status
 
-
-
     
+
+    if (!id) {
+        return res.status(400).json({error: "Unspecified item id"})
+    }
+
+    if(!published) {
+        return res.status(400).json({error: "Missing necessary field(s)"})
+    }
+
+    try {
+        const collection = await prisma.collections.findUnique(
+            {
+                where: {
+                    id: id
+                }
+            }
+        )
+
+        //Error Checks
+        if (!collection) {
+            return res.status(404).json({error: "Collection not found"})
+        }
+        if (!(collection.ownerId === client.id)) {
+            return res.status(404).json({ error: "Collection not found" });
+        }
+
+        const updatedCollection = await prisma.collections.update(
+            {
+                where: {
+                    id: id
+                },
+                data: {
+                    published: published
+                }
+            }
+        )
+
+        res.status(200).json({updatedCollection})
+
+
+    } catch(error) {
+        console.error(error)
+        res.status(500).json({error: "Couldn't change the publish status"})
+    }
 })
 
 
