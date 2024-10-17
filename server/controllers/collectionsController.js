@@ -20,7 +20,8 @@ const getAllCollections = asyncHandler( async(req, res) => {
                 name: true, 
                 images: {
                     select: {
-                        name: true
+                        name: true,
+                        url: true
                     }
                 },
                 published: true
