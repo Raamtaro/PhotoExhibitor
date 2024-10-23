@@ -98,7 +98,7 @@ const AllCollections = () => {
             {
                 value: 1.0,
                 duration: 1.0,
-                ease: 'power2.inOut'
+                ease: 'Power4.easeOut'
             }
         )
     }
@@ -110,18 +110,12 @@ const AllCollections = () => {
             {
                 value: 0.0,
                 duration: 1.0,
-                ease: 'power2.inOut',
+                ease: 'Power4.easeOut',
                 
                 
             }
-        )
-
-        
+        )      
     }
-
-
-
- 
 
     if (loading) {
         return (
