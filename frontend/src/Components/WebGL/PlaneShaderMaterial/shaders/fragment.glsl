@@ -25,7 +25,7 @@ void main() {
     // vec3 color = texture2D(uTexture,scaleUV(vNewUv, .8)).rgb;
 
     // //Combo
-    vec3 color = rgbShift(uTexture, scaleUV(vNewUv, .83), uOffset);
+    vec3 color = rgbShift(uTexture, scaleUV(vNewUv, .73), uOffset);
 
 
     gl_FragColor = vec4(color, uAlpha);

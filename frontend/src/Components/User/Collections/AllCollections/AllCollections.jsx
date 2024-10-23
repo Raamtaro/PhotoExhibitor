@@ -97,10 +97,26 @@ const AllCollections = () => {
             planeRef.current.material.uniforms.uAlpha, 
             {
                 value: 1.0,
-                duration: 1.5,
+                duration: 1.0,
                 ease: 'power2.inOut'
             }
         )
+    }
+
+    const handleExit = () => {
+
+        gsap.to(
+            planeRef.current.material.uniforms.uAlpha,
+            {
+                value: 0.0,
+                duration: 1.0,
+                ease: 'power2.inOut',
+                
+                
+            }
+        )
+
+        
     }
 
 
@@ -138,6 +154,7 @@ const AllCollections = () => {
                             key={index} 
                             onClick={() => handleCollectionNavigation(collection.id)} 
                             onMouseEnter={() => handleEnter(index)}
+                            onMouseLeave={handleExit}
                             href=""
                         >
 
