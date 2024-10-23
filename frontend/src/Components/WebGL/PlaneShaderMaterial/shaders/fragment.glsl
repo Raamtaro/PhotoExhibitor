@@ -18,19 +18,19 @@ vec2 scaleUV(vec2 uv,float scale) {
 }
 
 void main() {
-    // vec4 helloWorld = texture2D(uTexture, vUv);
+    vec4 helloWorld = texture2D(uTexture, vUv);
 
 
     // vec3 color = rgbShift(uTexture, vUv, uOffset); 
     // vec3 color = texture2D(uTexture,scaleUV(vNewUv, .8)).rgb;
 
     // //Combo
-    // vec3 color = rgbShift(uTexture, scaleUV(vNewUv, .83), uOffset);
+    vec3 color = rgbShift(uTexture, scaleUV(vNewUv, .83), uOffset);
 
 
-    // gl_FragColor = vec4(color, uAlpha);
+    gl_FragColor = vec4(color, uAlpha);
 
-    gl_FragColor = vec4(vUv, 0.0 ,uAlpha); //This works out, vUv is being passed correctly.
+    // gl_FragColor = vec4(vUv, 0.0 ,uAlpha); //This works out, vUv is being passed correctly.
     // gl_FragColor = vec4(helloWorld.rgb, uAlpha);
     // #include <tonemapping_fragment>
     // #include <colorspace_fragment>

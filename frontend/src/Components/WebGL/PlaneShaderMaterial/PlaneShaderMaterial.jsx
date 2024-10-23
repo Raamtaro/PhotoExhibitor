@@ -23,7 +23,7 @@ const PlaneShaderMaterial = forwardRef((props, ref) => {
             {
                 uniforms: {
                     uOffset: {value: new THREE.Vector2(0.0, 0.0)},
-                    uAlpha: {value: 0.9},
+                    uAlpha: {value: 0.0},
                     uTexture: {value: null}
                 },
                 vertexShader: vertexShader,

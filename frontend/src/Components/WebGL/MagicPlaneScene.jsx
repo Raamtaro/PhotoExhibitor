@@ -56,7 +56,7 @@ const MagicPlaneScene = forwardRef((props, ref) => {
 
     const remapMouse = () => {
         //https://tympanus.net/codrops/2019/10/21/how-to-create-motion-hover-effects-with-image-distortions-using-three-js/#:~:text=Updating%20the%20plane%20position
-        //I re-adapted the approach from the above article
+        //I re-adapted the approach from the above article, and I pretty much re-use this code as I work it into other R3F setups. Very handy.
 
         //Remapping the mouse coordinates fit the view size of the scene (2D --> 3D)
         const mouseVector = new THREE.Vector3(
@@ -79,14 +79,6 @@ const MagicPlaneScene = forwardRef((props, ref) => {
             ref.current.material.uniforms.uOffset.value.x = mouse.current.targetVelocity * dir.x * 3.0
             ref.current.material.uniforms.uOffset.value.y = mouse.current.targetVelocity * dir.y * 3.0
         }
-
-        // ref.current.position.x = pos.x;
-        // ref.current.position.y = pos.y;
-        // ref.current.position.z = pos.z;
-
-        // //Update ref's uniforms as it depends on the dir variable
-        // ref.current.material.uniforms.uOffset.value.x = mouse.current.targetVelocity * dir.x * 3.0
-        // ref.current.material.uniforms.uOffset.value.y = mouse.current.targetVelocity * dir.y * 3.0
     }
 
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useState, useRef, Suspense} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
 
@@ -10,6 +10,11 @@ import MagicPlaneScene from '../../../WebGL/MagicPlaneScene'
 
 import './styles/AllCollections.css'
 
+import { useLoader } from '@react-three/fiber'
+import { TextureLoader } from 'three'
+
+import gsap from 'gsap'
+
 const AllCollections = () => {
     //API States
     const [loading, setLoading] = useState(true)
@@ -20,7 +25,7 @@ const AllCollections = () => {
     const navigate = useNavigate()
 
     //Three JS scene ref
-    const planeRef = useRef()
+    const planeRef = useRef() //The scene renders both a camera and a plane, but it's only necessary to access the plane's ref to access the material
 
 
     /**
@@ -75,18 +80,30 @@ const AllCollections = () => {
 
     /**
      * Three JS Scene stuff
-     * 
+     * onEnter, fade the opacity in to 1 and set the texture
+     * onExit, fade the opacity out to 0 and set texture to null
      * 
      */
 
+    const urls = myCollections.map((collection) => collection.images[0].url)
+    console.log(urls)
+
+    const textures = useLoader(TextureLoader, urls)
+
+    const handleEnter = (index) => {
+        planeRef.current.material.uniforms.uTexture.value = textures[index]
+
+        gsap.to(
+            planeRef.current.material.uniforms.uAlpha, 
+            {
+                value: 1.0,
+                duration: 1.5,
+                ease: 'power2.inOut'
+            }
+        )
+    }
 
 
-
-
-
-    /**
-     * RENDER
-     */
 
  
 
@@ -107,7 +124,9 @@ const AllCollections = () => {
     return (
         <>
             <Experience> 
-                <MagicPlaneScene ref={planeRef}/>
+                <Suspense fallback={null}>
+                    <MagicPlaneScene ref={planeRef} textures={textures}/>
+                </Suspense>
             </Experience>
             <h1>
                 Update a Collection
@@ -115,7 +134,16 @@ const AllCollections = () => {
             <section className="viewer-section">
                 {
                     myCollections.map((collection, index) => (
-                        <span key={index} onClick={() => handleCollectionNavigation(collection.id)} href="">{collection.name}</span>
+                        <span 
+                            key={index} 
+                            onClick={() => handleCollectionNavigation(collection.id)} 
+                            onMouseEnter={() => handleEnter(index)}
+                            href=""
+                        >
+
+                            {collection.name}
+
+                        </span>
                     ))
                 }
             </section>
