@@ -93,9 +93,9 @@ function UserDashboard() {
             <ul className="all-collections-list">
               {
                 publishedCollections.map((collection, index)=> (
-                  <li key={index} className="all-collections-list-item" onClick={()=> handleNavigate(collection.id)}>
+                  <li key={index} className="all-collections-list-item" >
                     <figure>
-                      <img src={collection.images[0].url} alt="Collection Cover Photo" />
+                      <img src={collection.images[0].url} alt="Collection Cover Photo" onClick={()=> handleNavigate(collection.id)}/>
                       <figcaption>{collection.name}</figcaption>
                     </figure>
                   </li>

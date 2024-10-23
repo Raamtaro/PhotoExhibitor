@@ -1,21 +1,41 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
+
+import Experience from '../../../WebGL/Experience'
+import { PerspectiveCamera } from '@react-three/drei'
+import { useFrame, useThree } from '@react-three/fiber'
+
+import MagicPlaneScene from '../../../WebGL/MagicPlaneScene'
 
 import './styles/AllCollections.css'
 
 const AllCollections = () => {
-
+    //API States
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [myCollections , setMyCollections] = useState([])
-    const navigate = useNavigate()
-    const {user} = useUser()
 
-    const handleCollectionNavigation = (id) => {
+    //Navigation
+    const navigate = useNavigate()
+
+    //Three JS scene ref
+    const planeRef = useRef()
+
+
+    /**
+     * 
+     *Handle Navigation
+     */
+
+    const handleCollectionNavigation = (id) => { 
         navigate(`/user/collections/${id}/edit`)
 
     }
+
+    /**
+     * API get collections
+     */
 
     useEffect(()=>{
         const token = localStorage.getItem('token')
@@ -47,8 +67,28 @@ const AllCollections = () => {
     }, [])
 
     useEffect(() => {
-        console.log(myCollections)
+        if (myCollections.length > 0) {
+            console.log(myCollections)
+        }
     }, [myCollections])
+
+
+    /**
+     * Three JS Scene stuff
+     * 
+     * 
+     */
+
+
+
+
+
+
+    /**
+     * RENDER
+     */
+
+ 
 
     if (loading) {
         return (
@@ -62,10 +102,13 @@ const AllCollections = () => {
         return (
           <div>Error: {error} </div>
         )
-      }
+    }
 
     return (
         <>
+            <Experience> 
+                <MagicPlaneScene ref={planeRef}/>
+            </Experience>
             <h1>
                 Update a Collection
             </h1>

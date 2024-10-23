@@ -5,7 +5,7 @@ import Experience from '../../WebGL/Experience'
 function CollectionsOutlet() {
   return (
     <>
-      <Experience />  
+       
       <Outlet/>
     </>
   )
