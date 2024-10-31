@@ -1,28 +1,26 @@
 import React, {useEffect, useState, useRef} from 'react'
-import { useFrame, addEffect } from '@react-three/fiber'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
-import './styles/CollectionsViewer.css'
-import MeshImageWrapper from './MeshImageWrapper/MeshImageWrapper'
-
-
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import Experience from '../../../WebGL/Experience.jsx'
+import ViewerPlaneScene from '../../../WebGL/ViewerPlaneScene.jsx'
 
-
-
-
+import './styles/CollectionsViewer.css'
 
 gsap.registerPlugin(useGSAP)
 
 const CollectionsViewer = () => {
-  const navigate = useNavigate()
-  const { user } = useUser()
-  const {id} = useParams()
+  /**
+   * Feed the states in as props into the ViewerPlaneScene
+   */
   const [currentCollection, setCurrentCollection] = useState({})
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState([]) 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+
+  const { user } = useUser()
+  const {id} = useParams()
 
   useEffect(()=>{
     const token = localStorage.getItem('token')
@@ -30,60 +28,78 @@ const CollectionsViewer = () => {
     const getCollectionInfo = async () => {
       try {
         const response = await fetch (
-          `http://localhost:3000/collections/${id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
+            `http://localhost:3000/collections/${id}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
             },
             
-          }
+            }
         )
         if (response.ok) {
-          const result = await response.json()
-          setCurrentCollection(result.collection)
-          setImages(result.collection.images)
+            const result = await response.json()
+            setCurrentCollection(result.collection)
+            setImages(result.collection.images)
           
         }
 
-      } catch (error) {
-        console.error(error)
-        setError("Couldn't retrieve the collection")
-      } finally {
-        setLoading(false)
-      }
+        } catch (error) {
+            console.error(error)
+            setError("Couldn't retrieve the collection")
+        } finally {
+            setLoading(false)
+        }
     }
     getCollectionInfo()
   }, [id])
 
+  useEffect(
+    () => {
+
+      console.log(currentCollection)
+    }, [currentCollection]
+  )
+
+  useEffect( //Going to need to get the length of the images
+    () => {
+      if (images.length > 0) {
+        console.log(images) //Images is an array
+      }
+    }, [images]
+  )
+
+
+  
   if (loading) {
     return (
-      <div>Loading...</div>
+        <div>Loading...</div>
     )
   }
 
   if (error) {
-    return (
-      <div>Error</div>
-    )
+      return (
+          <div>Error</div>
+      )
   }
 
   return (
     <> 
-          <header className="viewer-header">
-            <span className="viewer-header-line">{currentCollection?.name}</span>
-            <span className="viewer-header-line line-author">{user?.name}</span>
-          </header>
-          <section className="collections-viewer-main">
-            <div className="collections-grid">
-              {
-                images.map((image, index) => (
-                  <MeshImageWrapper key={index} image={image} index={index}/>
-                ))
-              }
-            </div>
+      <Experience>
+        <ViewerPlaneScene images={images} />
+      </Experience>
+      <header className="viewer-header">
+        <span className="viewer-header-line">{currentCollection?.name}</span>
+        <span className="viewer-header-line line-author">{user?.name}</span>
+      </header>
+      {
+        images.map((image, index)=>(
+          <section key={index} className="collection-image">
           </section>
+        ))
+      }
+
     </>
   )
 }

@@ -16,8 +16,8 @@ h1 {
 }
 
 .viewer-section {
-    padding-top: 20rem;
-    padding-bottom: 4rem;
+    padding-block: 20rem;
+    /* padding-bottom: 4rem; */
     padding-left: 3rem;
     display: flex;
     flex-direction: column;

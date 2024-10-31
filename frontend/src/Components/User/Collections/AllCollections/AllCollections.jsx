@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, Suspense} from 'react'
+import React, {useEffect, useState, useRef, Suspense, startTransition} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../../../../Contexts/UserContext'
 
@@ -14,6 +14,7 @@ import { useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three'
 
 import gsap from 'gsap'
+// import { div } from 'three/webgpu'
 
 const AllCollections = () => {
     //API States
@@ -45,6 +46,7 @@ const AllCollections = () => {
     useEffect(()=>{
         const token = localStorage.getItem('token')
         const getMyCollections = async () => {
+
             try {
                 const response = await fetch(
                     'http://localhost:3000/collections/mycollections',
@@ -68,7 +70,9 @@ const AllCollections = () => {
                 setLoading(false)
             }   
         }
-        getMyCollections()
+        startTransition(()=>{
+            getMyCollections()
+        })
     }, [])
 
     useEffect(() => {
@@ -88,56 +92,62 @@ const AllCollections = () => {
     const urls = myCollections.map((collection) => collection.images[0].url)
     console.log(urls)
 
-    const textures = useLoader(TextureLoader, urls)
+    const textures = urls.length > 0 ? useLoader(TextureLoader, urls) : []
 
     const handleEnter = (index) => {
-        planeRef.current.material.uniforms.uTexture.value = textures[index]
+        if (planeRef.current) {
+            planeRef.current.material.uniforms.uTexture.value = textures[index]
+            gsap.to(
+                planeRef.current.material.uniforms.uAlpha, 
+                {
+                    value: 1.0,
+                    duration: 1.0,
+                    ease: 'Power4.easeOut'
+                }
+            )
+        }
 
-        gsap.to(
-            planeRef.current.material.uniforms.uAlpha, 
-            {
-                value: 1.0,
-                duration: 1.0,
-                ease: 'Power4.easeOut'
-            }
-        )
     }
 
     const handleExit = () => {
-
-        gsap.to(
-            planeRef.current.material.uniforms.uAlpha,
-            {
-                value: 0.0,
-                duration: 1.0,
-                ease: 'Power4.easeOut',
-                
-                
-            }
-        )      
+        if (planeRef.current) {
+            gsap.to(
+                planeRef.current.material.uniforms.uAlpha,
+                {
+                    value: 0.0,
+                    duration: 1.0,
+                    ease: 'Power4.easeOut',
+                    
+                    
+                }
+            )   
+        }
+   
     }
 
-    if (loading) {
-        return (
-            <div>
-                loading....
-            </div>
-        )
-    }
+    // if (loading) {
+    //     return (
+    //         <div>
+    //             loading....
+    //         </div>
+    //     )
+    // }
 
-    if (error) {
-        return (
-          <div>Error: {error} </div>
-        )
-    }
+    // if (error) {
+    //     return (
+    //       <div>Error: {error} </div>
+    //     )
+    // }
 
     return (
         <>
-            <Experience> 
-                <Suspense fallback={null}>
-                    <MagicPlaneScene ref={planeRef} textures={textures}/>
-                </Suspense>
-            </Experience>
+            <Suspense>
+                <Experience>
+                    <Suspense fallback={<div>Loading... </div>}>
+                        <MagicPlaneScene ref={planeRef} textures={textures}/>
+                    </Suspense>
+                </Experience>
+            </Suspense>
             <h1>
                 Update a Collection
             </h1>
