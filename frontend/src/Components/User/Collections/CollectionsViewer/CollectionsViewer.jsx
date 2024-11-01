@@ -55,20 +55,20 @@ const CollectionsViewer = () => {
     getCollectionInfo()
   }, [id])
 
-  useEffect(
-    () => {
+  // useEffect(
+  //   () => {
 
-      console.log(currentCollection)
-    }, [currentCollection]
-  )
+  //     console.log(currentCollection)
+  //   }, [currentCollection]
+  // )
 
-  useEffect( //Going to need to get the length of the images
-    () => {
-      if (images.length > 0) {
-        console.log(images) //Images is an array
-      }
-    }, [images]
-  )
+  // useEffect( //Going to need to get the length of the images
+  //   () => {
+  //     if (images.length > 0) {
+  //       console.log(images) //Images is an array
+  //     }
+  //   }, [images]
+  // )
 
 
   
@@ -96,6 +96,7 @@ const CollectionsViewer = () => {
       {
         images.map((image, index)=>(
           <section key={index} className="collection-image">
+            <p>{`Figure ${image.id}`}</p>
           </section>
         ))
       }

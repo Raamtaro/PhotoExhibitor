@@ -3,6 +3,8 @@ import { PerspectiveCamera } from '@react-three/drei'
 
 import { useThree, useFrame } from '@react-three/fiber'
 
+import { useLenis } from 'lenis/react'
+
 import PlaneImage from './PlaneImage/PlaneImage.jsx'
 
 function ViewerPlaneScene(props) {
@@ -13,24 +15,45 @@ function ViewerPlaneScene(props) {
       velocity: 0
     })
 
+    const [scrollVelocity, setScrollVelocity] = useState(null)
+
+    const planeRefs = useRef([])
+
     const {images} = props
 
-    console.log(images)
+    // console.log(images)
 
-    useEffect(()=> { //Scroll Event Listener
-        const handleScroll = () => {
-            scrollRef.current.value = window.scrollY
-            // console.log(scrollRef.current.value)
-        }
-        window.addEventListener('scroll', handleScroll), {passive: true}
+    useLenis((lenis)=> {
+        // scrollRef.current.velocity = lenis.velocity
+        setScrollVelocity(lenis.velocity)
+        scrollRef.current.value = lenis.scroll
+    })
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-        }
-    }, [])
+    useEffect(()=> {
+        planeRefs.current = images.map((_, index)=> planeRefs.current[index] || React.createRef())
+    }, [images])
+
+    // useEffect(()=> {
+
+    //     console.log(planeRefs.current[0])
+    // }, [planeRefs])
+
+    // useEffect(()=> { 
+    //     const handleScroll = () => {
+    //         scrollRef.current.value = window.scrollY
+            
+    //     }
+    //     window.addEventListener('scroll', handleScroll), {passive: true}
+
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll)
+    //     }
+    // }, [])
 
     useFrame(()=> {
-        cameraRef.current.position.y = - scrollY / size.height * (images.length + 1)
+        
+        cameraRef.current.position.y = - scrollRef.current.value / size.height * (images.length)
+        
     })
     return (
         <>
@@ -44,7 +67,13 @@ function ViewerPlaneScene(props) {
             />
             {
             images.map((image, index) => (
-                <PlaneImage key={index} texture={image.url} positioning={[index%2===0 ? 1 : -1, -(images.length + 1) * index, 0]}/>
+                <PlaneImage 
+                    ref={planeRefs.current[index]}
+                    key={index} 
+                    texture={image.url} 
+                    positioning={[index%2===0 ? 1 : -1, -(images.length) * index, 0]}
+                    velocity={scrollVelocity * 0.005}
+                />
             ))
             }
         </>

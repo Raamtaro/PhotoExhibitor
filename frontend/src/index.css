@@ -9,8 +9,10 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(36, 36, 36);
-  background-color: rgb(241, 225, 236);
+  /* color: rgba(36, 36, 36);
+  background-color: rgb(241, 225, 236); */
+  background-color: rgba(36, 36, 36);
+  color: rgb(241, 225, 236);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
