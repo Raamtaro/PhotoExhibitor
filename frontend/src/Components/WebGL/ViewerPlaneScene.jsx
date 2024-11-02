@@ -25,7 +25,7 @@ function ViewerPlaneScene(props) {
 
     useLenis((lenis)=> {
         // scrollRef.current.velocity = lenis.velocity
-        setScrollVelocity(lenis.velocity)
+        setScrollVelocity(lenis.velocity) //This is not the most optimal solution, this causes too many re-renders and makes the animation very choppy. Need to return to utilize refs or memos (preferably refs)
         scrollRef.current.value = lenis.scroll
     })
 
@@ -72,7 +72,7 @@ function ViewerPlaneScene(props) {
                     key={index} 
                     texture={image.url} 
                     positioning={[index%2===0 ? 1 : -1, -(images.length) * index, 0]}
-                    velocity={scrollVelocity * 0.005}
+                    velocity={scrollVelocity * 0.0023}
                 />
             ))
             }

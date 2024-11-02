@@ -30,6 +30,7 @@ const PlaneImage = forwardRef((props, ref) => {
     })
 
     // console.log(planeShaderMaterial)
+    
 
     useFrame(()=> {
         planeShaderMaterial.uniforms.uOffset.value.y = velocity
