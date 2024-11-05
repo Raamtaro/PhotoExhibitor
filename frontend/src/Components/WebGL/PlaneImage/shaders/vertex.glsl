@@ -6,8 +6,8 @@ varying vec2 vNewUv;
 float M_PI = 3.141529654;
 
 vec3 deformationCurve(vec3 position, vec2 uv, vec2 offset) {
-    position.x = position.x + (sin(uv.y * M_PI) * offset.x);
-    position.y = position.y + (sin(uv.x * M_PI) * offset.y);
+    position.x = position.x + (sin(uv.y * M_PI) * offset.x * 2.5);
+    position.y = position.y + (sin(uv.x * M_PI) * offset.y * 2.5);
     return position;
 }
 
