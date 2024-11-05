@@ -99,6 +99,7 @@ const getCollection = asyncHandler( async (req, res) => {
                             
                         }
                     },
+                    published: true
                     
                 }
             }
